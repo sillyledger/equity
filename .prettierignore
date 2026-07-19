@@ -1,3 +1,6 @@
 .next
 node_modules
 pnpm-lock.yaml
+
+# reference file — must stay byte-identical to the approved mockup
+design/mockup.html
