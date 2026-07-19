@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# equity.tw
 
-## Getting Started
+**equity.tw** is a cross-border net worth tracker built for two audiences: foreigners
+settling in Taiwan and Taiwanese living abroad. It combines property, investments, and
+mortgages held in NT$ and USD into a single, manually-updated net worth figure — no bank
+linking required, just a monthly check-in.
 
-First, run the development server:
+## Tech stack
+
+- [Next.js 15](https://nextjs.org) (App Router, TypeScript strict mode)
+- [Tailwind CSS v4](https://tailwindcss.com) for utility spacing/typography (Preflight is
+  disabled — see note in `app/globals.css` — so bespoke layout CSS ported from the mockup
+  renders exactly as designed)
+- [`next/font/google`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts)
+  for Inter, loaded as two CSS variables (`--font-inter` for body text, `--font-inter-headline`
+  for the display headline) so the headline typeface can be swapped independently later
+- pnpm
+
+## Local development
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Other scripts: `pnpm build`, `pnpm start`, `pnpm lint`, `pnpm format`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project structure
 
-## Learn More
+- `app/` — root layout, global styles, metadata, page composition
+- `components/` — `Nav`, `Hero`, `Panels`, `DocStack`, `NetWorthChart`, `StatStrip`, `Footer`
+- `lib/content.ts` — all site copy as typed constants, so text edits don't require hunting
+  through JSX
+- `design/mockup.html` — the approved, static landing page mockup. It is the design
+  reference for this build: layout, spacing, colors, and copy in `app/` and `components/`
+  are ported from it pixel-for-pixel, not reinterpreted.
 
-To learn more about Next.js, take a look at the following resources:
+## Deploying
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The app builds clean with `pnpm build` and has no required environment variables, so it can
+be imported into Vercel with zero extra configuration.
