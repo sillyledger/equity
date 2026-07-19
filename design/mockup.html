@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>equity.tw — two countries, one net worth</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  :root{
+    --bg: #F7F7F2;
+    --ink: #1C1C1A;
+    --ink-soft: #9A9A90;
+    --ink-faint: #C4C3B9;
+    --border: rgba(28,28,26,0.12);
+
+    --cream: #EAE3D9;
+    --lavender: #DEDBE6;
+    --dark: #171716;
+
+    --font: 'Inter', -apple-system, sans-serif;
+    --max: 1280px;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0; padding:0;}
+  body{background:var(--bg); color:var(--ink); font-family:var(--font); -webkit-font-smoothing:antialiased;}
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 44px;}
+
+  /* ---------- nav ---------- */
+  nav{border-bottom:1px solid var(--border);}
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; height:74px;}
+  .brand{font-weight:800; font-size:18px; letter-spacing:0.01em;}
+  .navlinks{display:flex; align-items:center; gap:36px; font-size:14px; color:var(--ink);}
+  .navlinks a:hover{color:var(--ink-soft);}
+  .btn-dark{background:var(--ink); color:var(--bg); font-weight:600; font-size:13.5px; padding:11px 20px; border-radius:8px;}
+  .btn-dark:hover{background:#000;}
+
+  /* ---------- hero (unified grid, panels live inside it) ---------- */
+  .hero{padding:36px 0 56px;}
+  .hero-grid{display:grid; grid-template-columns:220px 1fr; column-gap:26px;}
+
+  .headline-row{grid-column:1/-1; display:flex; justify-content:space-between; align-items:flex-start; gap:30px; margin-bottom:34px;}
+  .tag{font-size:14px; color:var(--ink); font-weight:500; white-space:nowrap; padding-top:6px;}
+
+  h1{font-weight:800; font-size:clamp(2.1rem,3.4vw,3.35rem); line-height:1.08; letter-spacing:-0.02em; margin:0;}
+  h1 .g{color:var(--ink-soft);}
+
+  .intro-row{grid-column:2/-1; margin-bottom:26px;}
+  .hero-p{font-size:14.5px; line-height:1.55; color:var(--ink); max-width:46ch;}
+
+  .scroll-col{grid-column:1; grid-row:3; align-self:start; padding-top:4px;}
+  .scroll-mark{display:flex; align-items:center; gap:14px;}
+  .scroll-mark .dash{width:20px; height:1px; background:var(--ink);}
+  .scroll-mark .o{width:8px; height:8px; border:1.5px solid var(--ink); border-radius:50%;}
+  .scroll-vert{writing-mode:vertical-rl; font-size:10.5px; letter-spacing:0.15em; color:var(--ink-soft); font-weight:600; margin-top:14px;}
+
+  .panels-col{grid-column:2/-1; grid-row:3;}
+
+  /* ---------- three panel band ---------- */
+  .panels{display:grid; grid-template-columns:1fr 1.15fr 1fr; border-radius:18px; overflow:hidden; box-shadow:0 40px 70px -36px rgba(28,28,26,0.22);}
+  .panel{min-height:340px; padding:30px; display:flex; flex-direction:column;}
+  .panel.light.cream{background:linear-gradient(160deg, #EFE9DF, var(--cream)); box-shadow:inset 0 1px 0 rgba(255,255,255,0.5);}
+  .panel.light.lavender{background:linear-gradient(160deg, #E6E3ED, var(--lavender)); box-shadow:inset 0 1px 0 rgba(255,255,255,0.5);}
+  .panel.center{background:linear-gradient(165deg, #1D1D1B, var(--dark)); color:#F2F1EC; align-items:center;}
+
+  .panel h3{font-size:18.5px; font-weight:700; margin:0 0 7px; letter-spacing:-0.01em;}
+  .panel p{font-size:13.5px; color:rgba(28,28,26,0.6); margin:0 0 13px; max-width:29ch; line-height:1.5;}
+  .learn{font-size:13px; font-weight:600; display:inline-flex; align-items:center; gap:7px;}
+
+  /* document-stack illustration */
+  .doc-row{display:flex; align-items:flex-end; gap:10px; height:96px; margin-bottom:20px;}
+  .doc-card{width:44px; border-radius:7px; background:rgba(255,255,255,0.55); border:1px solid rgba(28,28,26,0.10); padding:9px 7px; box-shadow:0 12px 24px -15px rgba(28,28,26,0.25); flex-shrink:0;}
+  .doc-card .ln{height:2.5px; border-radius:2px; background:rgba(28,28,26,0.18); margin-bottom:5px;}
+  .doc-card .ln:last-child{margin-bottom:0;}
+  .doc-card.h1{height:58px;}
+  .doc-card.h2{height:74px;}
+  .doc-card.featured{width:56px; height:92px; background:linear-gradient(165deg, rgba(255,255,255,0.98), rgba(255,255,255,0.68)); border-color:rgba(28,28,26,0.14); box-shadow:0 18px 32px -14px rgba(28,28,26,0.3); position:relative; padding-bottom:26px;}
+  .doc-card .pill{position:absolute; bottom:8px; left:6px; right:6px; background:var(--ink); color:#fff; font-size:8px; font-weight:700; letter-spacing:0.01em; padding:4px 5px; border-radius:5px; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .mini-bars{display:flex; align-items:flex-end; gap:3px; height:100%; margin-left:auto;}
+  .mini-bars div{width:4px; border-radius:2px; background:rgba(28,28,26,0.16);}
+
+  .center-brand{font-weight:800; font-size:17px; align-self:flex-start;}
+  .center-art{flex:1; display:flex; align-items:center; justify-content:center; width:100%;}
+  .center-foot{font-size:11.5px; color:rgba(242,241,236,0.5); align-self:flex-start; letter-spacing:0.04em;}
+
+  /* ---------- stat strip ---------- */
+  .stats{border-top:1px solid var(--border); border-bottom:1px solid var(--border);}
+  .stats .wrap{display:grid; grid-template-columns:repeat(3,1fr);}
+  .stat{padding:34px 0; border-left:1px solid var(--border); padding-left:30px;}
+  .stat:first-child{border-left:none; padding-left:0;}
+  .stat .n{font-size:26px; font-weight:800; letter-spacing:-0.01em;}
+  .stat .l{font-size:13px; color:var(--ink-soft); margin-top:6px;}
+
+  footer{padding:30px 0; font-size:13px; color:var(--ink-soft); display:flex; justify-content:space-between;}
+
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr;}
+    .headline-row{flex-direction:column; gap:14px;}
+    .intro-row, .scroll-col, .panels-col{grid-column:1;}
+    .scroll-col{grid-row:auto; margin-bottom:20px;}
+    .panels-col{grid-row:auto;}
+    .panels{grid-template-columns:1fr;}
+    .navlinks{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">EQUITY.</div>
+    <div class="navlinks">
+      <a href="#">How it works</a>
+      <a href="#">Built for</a>
+      <a href="#">Pricing</a>
+    </div>
+    <a class="btn-dark" href="#">Start tracking</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="headline-row">
+        <h1>Two Countries, <span class="g">One Net</span><br>Worth, <span class="g">Finally</span> Together.</h1>
+        <div class="tag">[ TW / ABROAD ]</div>
+      </div>
+
+      <div class="intro-row">
+        <p class="hero-p">Built for foreigners settling in Taiwan, and Taiwanese living abroad. Property, investments, and mortgages — tracked in both currencies, in one place.</p>
+      </div>
+
+      <div class="scroll-col">
+        <div class="scroll-mark"><div class="dash"></div><div class="o"></div><div class="dash"></div></div>
+        <div class="scroll-vert">SCROLL DOWN</div>
+      </div>
+
+      <div class="panels-col">
+        <div class="panels">
+          <div class="panel light cream">
+            <div class="doc-row">
+              <div class="doc-card h1"><div class="ln" style="width:70%;"></div><div class="ln" style="width:50%;"></div></div>
+              <div class="doc-card featured">
+                <div class="ln" style="width:80%; background:rgba(28,28,26,0.28);"></div>
+                <div class="ln" style="width:60%;"></div>
+                <div class="ln" style="width:70%;"></div>
+                <div class="pill">NT$ + US$</div>
+              </div>
+              <div class="doc-card h2"><div class="ln" style="width:65%;"></div><div class="ln" style="width:45%;"></div><div class="ln" style="width:55%;"></div></div>
+              <div class="mini-bars">
+                <div style="height:30%;"></div><div style="height:48%;"></div><div style="height:40%;"></div><div style="height:66%;"></div><div style="height:82%;"></div>
+              </div>
+            </div>
+            <h3>Two Currencies, One Number</h3>
+            <p>NT$ and USD combined, always up to date.</p>
+            <div class="learn">Learn More →</div>
+          </div>
+
+          <div class="panel center">
+            <div class="center-brand">EQUITY.</div>
+            <div class="center-art">
+              <svg width="210" height="140" viewBox="0 0 210 140" fill="none">
+                <defs>
+                  <linearGradient id="cfill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#F2F1EC" stop-opacity="0.16"/>
+                    <stop offset="100%" stop-color="#F2F1EC" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M8,96 C32,98 48,104 64,101 C86,97 96,68 116,62 C136,56 149,84 166,76 C182,68 189,41 198,26 L198,118 L8,118 Z" fill="url(#cfill)"/>
+                <path d="M8,96 C32,98 48,104 64,101 C86,97 96,68 116,62 C136,56 149,84 166,76 C182,68 189,41 198,26" stroke="#F2F1EC" stroke-width="1.6" fill="none"/>
+                <circle cx="116" cy="62" r="3.5" fill="#F2F1EC"/>
+                <circle cx="116" cy="62" r="7" fill="none" stroke="#F2F1EC" stroke-opacity="0.35"/>
+                <g transform="translate(88,30)">
+                  <rect width="56" height="18" rx="9" fill="rgba(242,241,236,0.12)" stroke="rgba(242,241,236,0.3)" stroke-width="1"/>
+                  <circle cx="12" cy="9" r="2.5" fill="#7FE0A8"/>
+                  <text x="22" y="12.5" font-family="Inter, sans-serif" font-size="8.5" font-weight="700" fill="#F2F1EC" letter-spacing="0.5">SYNCED</text>
+                </g>
+                <line x1="8" y1="118" x2="198" y2="118" stroke="rgba(242,241,236,0.2)" stroke-width="1"/>
+                <g fill="rgba(242,241,236,0.28)">
+                  <rect x="8" y="112" width="3" height="6"/><rect x="24" y="109" width="3" height="9"/><rect x="40" y="113" width="3" height="5"/><rect x="56" y="107" width="3" height="11"/><rect x="72" y="104" width="3" height="14"/><rect x="88" y="110" width="3" height="8"/><rect x="104" y="100" width="3" height="18"/><rect x="120" y="105" width="3" height="13"/><rect x="136" y="97" width="3" height="21"/><rect x="152" y="102" width="3" height="16"/><rect x="168" y="94" width="3" height="24"/><rect x="184" y="90" width="3" height="28"/>
+                </g>
+              </svg>
+            </div>
+            <div class="center-foot">NET WORTH · TW + ABROAD</div>
+          </div>
+
+          <div class="panel light lavender">
+            <div class="doc-row">
+              <div class="mini-bars" style="margin-left:0; margin-right:auto;">
+                <div style="height:70%;"></div><div style="height:52%;"></div><div style="height:60%;"></div><div style="height:36%;"></div><div style="height:24%;"></div>
+              </div>
+              <div class="doc-card h2"><div class="ln" style="width:60%;"></div><div class="ln" style="width:45%;"></div><div class="ln" style="width:70%;"></div></div>
+              <div class="doc-card featured">
+                <div class="ln" style="width:75%; background:rgba(28,28,26,0.28);"></div>
+                <div class="ln" style="width:55%;"></div>
+                <div class="ln" style="width:65%;"></div>
+                <div class="pill">Added ✓</div>
+              </div>
+              <div class="doc-card h1"><div class="ln" style="width:65%;"></div><div class="ln" style="width:40%;"></div></div>
+            </div>
+            <h3>Nothing To Connect</h3>
+            <p>Add what you own once a month — no bank linking.</p>
+            <div class="learn">Learn More →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="wrap">
+    <div class="stat"><div class="n">2</div><div class="l">countries, one household</div></div>
+    <div class="stat"><div class="n">0</div><div class="l">bank connections required</div></div>
+    <div class="stat"><div class="n">1×</div><div class="l">monthly check-in, not daily</div></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%;">
+    <span>equity.tw — manually tracked, nothing connected.</span>
+    <span>© 2026</span>
+  </div>
+</footer>
+
+</body>
+</html>
