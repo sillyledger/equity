@@ -7,7 +7,7 @@ export const contentType = "image/png";
 // Swap this out once real social-card art is designed.
 export default function OpengraphImage() {
   return new ImageResponse(
-    <div style={{ width: "100%", height: "100%", background: "#171716" }} />,
+    <div style={{ width: "100%", height: "100%", background: "#16261D" }} />,
     size,
   );
 }

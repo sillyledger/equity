@@ -3,227 +3,239 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>equity.tw — two countries, one net worth</title>
+<title>Equity — Coming Soon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
   :root{
-    --bg: #F7F7F2;
-    --ink: #1C1C1A;
-    --ink-soft: #9A9A90;
-    --ink-faint: #C4C3B9;
-    --border: rgba(28,28,26,0.12);
+    --bg: #16261D;
+    --bg-deep: #101B15;
+    --cream: #F3EEE0;
+    --sage: #8FA395;
+    --terracotta: #C1613B;
+    --hairline: #2E4234;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    background:
+      radial-gradient(ellipse 800px 500px at 12% 100%, rgba(193,97,59,0.08), transparent 60%),
+      var(--bg);
+    color:var(--cream);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    overflow-x:hidden;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--terracotta); color:var(--cream);}
 
-    --cream: #EAE3D9;
-    --lavender: #DEDBE6;
-    --dark: #171716;
-
-    --font: 'Inter', -apple-system, sans-serif;
-    --max: 1280px;
+  .wrap{
+    max-width:1240px;
+    margin:0 auto;
+    width:100%;
+    padding:0 48px;
+    flex:1;
+    display:flex;
+    flex-direction:column;
   }
 
-  *{box-sizing:border-box;}
-  html,body{margin:0; padding:0;}
-  body{background:var(--bg); color:var(--ink); font-family:var(--font); -webkit-font-smoothing:antialiased;}
-  a{color:inherit; text-decoration:none;}
-  .wrap{max-width:var(--max); margin:0 auto; padding:0 44px;}
+  header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    padding-top:44px;
+  }
+  .logo{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:21px;
+    letter-spacing:0.01em;
+  }
+  .logo em{font-style:italic; color:var(--terracotta); font-weight:500;}
 
-  /* ---------- nav ---------- */
-  nav{border-bottom:1px solid var(--border);}
-  nav .wrap{display:flex; align-items:center; justify-content:space-between; height:74px;}
-  .brand{font-weight:800; font-size:18px; letter-spacing:0.01em;}
-  .navlinks{display:flex; align-items:center; gap:36px; font-size:14px; color:var(--ink);}
-  .navlinks a:hover{color:var(--ink-soft);}
-  .btn-dark{background:var(--ink); color:var(--bg); font-weight:600; font-size:13.5px; padding:11px 20px; border-radius:8px;}
-  .btn-dark:hover{background:#000;}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.14em;
+    color:var(--sage);
+    text-transform:uppercase;
+    text-align:right;
+  }
 
-  /* ---------- hero (unified grid, panels live inside it) ---------- */
-  .hero{padding:36px 0 56px;}
-  .hero-grid{display:grid; grid-template-columns:220px 1fr; column-gap:26px;}
+  main{
+    flex:1;
+    display:flex;
+    align-items:center;
+    gap:56px;
+    padding:44px 0;
+  }
+  .headline-col{flex:1.15; min-width:0; position:relative;}
+  h1{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:clamp(38px, 5.6vw, 68px);
+    line-height:1.08;
+    letter-spacing:-0.01em;
+  }
+  h1 em{font-style:italic; color:var(--terracotta); font-weight:500;}
 
-  .headline-row{grid-column:1/-1; display:flex; justify-content:space-between; align-items:flex-start; gap:30px; margin-bottom:34px;}
-  .tag{font-size:14px; color:var(--ink); font-weight:500; white-space:nowrap; padding-top:6px;}
+  .desc{
+    margin-top:26px;
+    max-width:440px;
+    font-size:15.5px;
+    line-height:1.65;
+    color:#C7D0C9;
+  }
 
-  h1{font-weight:800; font-size:clamp(2.1rem,3.4vw,3.35rem); line-height:1.08; letter-spacing:-0.02em; margin:0;}
-  h1 .g{color:var(--ink-soft);}
+  .note{
+    margin-top:28px;
+    font-size:13px;
+    color:var(--sage);
+  }
 
-  .intro-row{grid-column:2/-1; margin-bottom:26px;}
-  .hero-p{font-size:14.5px; line-height:1.55; color:var(--ink); max-width:46ch;}
+  /* stamp */
+  .stamp-col{
+    flex:0.85;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .stamp{
+    width:100%;
+    max-width:300px;
+    height:auto;
+    transform:rotate(-9deg);
+    animation:settle 1.1s cubic-bezier(.2,.8,.2,1) both;
+  }
+  @keyframes settle{
+    0%{opacity:0; transform:rotate(-22deg) scale(.9);}
+    100%{opacity:1; transform:rotate(-9deg) scale(1);}
+  }
+  .stamp-ring{
+    fill:none;
+    stroke:var(--terracotta);
+    stroke-width:1.4;
+    stroke-dasharray:3 4;
+  }
+  .stamp-ring-solid{
+    fill:none;
+    stroke:var(--terracotta);
+    stroke-width:1.2;
+    opacity:.6;
+  }
+  .stamp text{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    letter-spacing:.2em;
+    fill:var(--terracotta);
+  }
+  .needle{
+    animation:sway 5s ease-in-out infinite;
+    transform-origin:150px 150px;
+  }
+  @keyframes sway{
+    0%,100%{transform:rotate(-4deg);}
+    50%{transform:rotate(4deg);}
+  }
 
-  .scroll-col{grid-column:1; grid-row:3; align-self:start; padding-top:4px;}
-  .scroll-mark{display:flex; align-items:center; gap:14px;}
-  .scroll-mark .dash{width:20px; height:1px; background:var(--ink);}
-  .scroll-mark .o{width:8px; height:8px; border:1.5px solid var(--ink); border-radius:50%;}
-  .scroll-vert{writing-mode:vertical-rl; font-size:10.5px; letter-spacing:0.15em; color:var(--ink-soft); font-weight:600; margin-top:14px;}
+  footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    padding-bottom:44px;
+    border-top:1px solid var(--hairline);
+    padding-top:24px;
+    gap:24px;
+    flex-wrap:wrap;
+  }
+  .footnote{
+    font-size:13px;
+    color:var(--sage);
+    max-width:340px;
+    line-height:1.55;
+  }
+  .footnote a{
+    color:var(--terracotta);
+    text-decoration:underline;
+    text-underline-offset:2px;
+    text-decoration-color:rgba(193,97,59,0.5);
+  }
+  .footnote a:hover{text-decoration-color:var(--terracotta);}
+  .socials{display:flex; gap:10px;}
+  .socials a{
+    width:38px;height:38px;
+    border:1px solid var(--hairline);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--cream);
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  .socials a:hover{border-color:var(--terracotta); transform:translateY(-2px);}
+  .socials svg{width:16px;height:16px;}
 
-  .panels-col{grid-column:2/-1; grid-row:3;}
+  @media (max-width:820px){
+    .wrap{padding:0 24px;}
+    main{flex-direction:column-reverse; gap:30px; padding:30px 0;}
+    header{flex-direction:column; gap:18px;}
+    .eyebrow{text-align:left;}
+    footer{flex-direction:column; align-items:flex-start;}
+    .stamp{max-width:220px;}
+  }
 
-  /* ---------- three panel band ---------- */
-  .panels{display:grid; grid-template-columns:1fr 1.15fr 1fr; border-radius:18px; overflow:hidden; box-shadow:0 40px 70px -36px rgba(28,28,26,0.22);}
-  .panel{min-height:340px; padding:30px; display:flex; flex-direction:column;}
-  .panel.light.cream{background:linear-gradient(160deg, #EFE9DF, var(--cream)); box-shadow:inset 0 1px 0 rgba(255,255,255,0.5);}
-  .panel.light.lavender{background:linear-gradient(160deg, #E6E3ED, var(--lavender)); box-shadow:inset 0 1px 0 rgba(255,255,255,0.5);}
-  .panel.center{background:linear-gradient(165deg, #1D1D1B, var(--dark)); color:#F2F1EC; align-items:center;}
-
-  .panel h3{font-size:18.5px; font-weight:700; margin:0 0 7px; letter-spacing:-0.01em;}
-  .panel p{font-size:13.5px; color:rgba(28,28,26,0.6); margin:0 0 13px; max-width:29ch; line-height:1.5;}
-  .learn{font-size:13px; font-weight:600; display:inline-flex; align-items:center; gap:7px;}
-
-  /* document-stack illustration */
-  .doc-row{display:flex; align-items:flex-end; gap:10px; height:96px; margin-bottom:20px;}
-  .doc-card{width:44px; border-radius:7px; background:rgba(255,255,255,0.55); border:1px solid rgba(28,28,26,0.10); padding:9px 7px; box-shadow:0 12px 24px -15px rgba(28,28,26,0.25); flex-shrink:0;}
-  .doc-card .ln{height:2.5px; border-radius:2px; background:rgba(28,28,26,0.18); margin-bottom:5px;}
-  .doc-card .ln:last-child{margin-bottom:0;}
-  .doc-card.h1{height:58px;}
-  .doc-card.h2{height:74px;}
-  .doc-card.featured{width:56px; height:92px; background:linear-gradient(165deg, rgba(255,255,255,0.98), rgba(255,255,255,0.68)); border-color:rgba(28,28,26,0.14); box-shadow:0 18px 32px -14px rgba(28,28,26,0.3); position:relative; padding-bottom:26px;}
-  .doc-card .pill{position:absolute; bottom:8px; left:6px; right:6px; background:var(--ink); color:#fff; font-size:8px; font-weight:700; letter-spacing:0.01em; padding:4px 5px; border-radius:5px; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
-  .mini-bars{display:flex; align-items:flex-end; gap:3px; height:100%; margin-left:auto;}
-  .mini-bars div{width:4px; border-radius:2px; background:rgba(28,28,26,0.16);}
-
-  .center-brand{font-weight:800; font-size:17px; align-self:flex-start;}
-  .center-art{flex:1; display:flex; align-items:center; justify-content:center; width:100%;}
-  .center-foot{font-size:11.5px; color:rgba(242,241,236,0.5); align-self:flex-start; letter-spacing:0.04em;}
-
-  /* ---------- stat strip ---------- */
-  .stats{border-top:1px solid var(--border); border-bottom:1px solid var(--border);}
-  .stats .wrap{display:grid; grid-template-columns:repeat(3,1fr);}
-  .stat{padding:34px 0; border-left:1px solid var(--border); padding-left:30px;}
-  .stat:first-child{border-left:none; padding-left:0;}
-  .stat .n{font-size:26px; font-weight:800; letter-spacing:-0.01em;}
-  .stat .l{font-size:13px; color:var(--ink-soft); margin-top:6px;}
-
-  footer{padding:30px 0; font-size:13px; color:var(--ink-soft); display:flex; justify-content:space-between;}
-
-  @media (max-width:900px){
-    .hero-grid{grid-template-columns:1fr;}
-    .headline-row{flex-direction:column; gap:14px;}
-    .intro-row, .scroll-col, .panels-col{grid-column:1;}
-    .scroll-col{grid-row:auto; margin-bottom:20px;}
-    .panels-col{grid-row:auto;}
-    .panels{grid-template-columns:1fr;}
-    .navlinks{display:none;}
+  @media (prefers-reduced-motion: reduce){
+    .needle{animation:none;}
+    .stamp{animation:none; opacity:1; transform:rotate(-9deg);}
   }
 </style>
 </head>
 <body>
-
-<nav>
   <div class="wrap">
-    <div class="brand">EQUITY.</div>
-    <div class="navlinks">
-      <a href="#">How it works</a>
-      <a href="#">Built for</a>
-      <a href="#">Pricing</a>
-    </div>
-    <a class="btn-dark" href="#">Start tracking</a>
-  </div>
-</nav>
+    <header>
+      <div class="logo">EQUITY<em>.</em></div>
+      <div class="eyebrow">Coming Soon<br>Taipei ↔ Abroad</div>
+    </header>
 
-<section class="hero">
-  <div class="wrap">
-    <div class="hero-grid">
-      <div class="headline-row">
-        <h1>Two Countries, <span class="g">One Net</span><br>Worth, <span class="g">Finally</span> Together.</h1>
-        <div class="tag">[ TW / ABROAD ]</div>
+    <main>
+      <div class="headline-col">
+        <h1>Home in <em>two</em><br>places. Tracked<br>as one.</h1>
+        <p class="desc">Built for foreigners settling in Taiwan, and Taiwanese living abroad. Property, investments, and mortgages — tracked in both currencies, in one place.</p>
+        <p class="note">No launch date yet. We'd rather get it right than get it out.</p>
       </div>
 
-      <div class="intro-row">
-        <p class="hero-p">Built for foreigners settling in Taiwan, and Taiwanese living abroad. Property, investments, and mortgages — tracked in both currencies, in one place.</p>
+      <div class="stamp-col">
+        <svg class="stamp" viewBox="0 0 300 300" fill="none">
+          <circle class="stamp-ring" cx="150" cy="150" r="128"/>
+          <circle class="stamp-ring-solid" cx="150" cy="150" r="108"/>
+          <g class="needle">
+            <line x1="150" y1="80" x2="150" y2="220" stroke="var(--terracotta)" stroke-width="1.2" opacity="0.7"/>
+            <line x1="80" y1="150" x2="220" y2="150" stroke="var(--terracotta)" stroke-width="1.2" opacity="0.7"/>
+            <path d="M150 100 L162 150 L150 200 L138 150 Z" fill="var(--terracotta)" opacity="0.9"/>
+            <circle cx="150" cy="150" r="5" fill="var(--cream)"/>
+          </g>
+          <defs>
+            <path id="circlePath" d="M150,150 m-95,0 a95,95 0 1,1 190,0 a95,95 0 1,1 -190,0"/>
+          </defs>
+          <text>
+            <textPath href="#circlePath" startOffset="2%">EQUITY.TW · COMING SOON · EQUITY.TW · COMING SOON ·</textPath>
+          </text>
+        </svg>
       </div>
+    </main>
 
-      <div class="scroll-col">
-        <div class="scroll-mark"><div class="dash"></div><div class="o"></div><div class="dash"></div></div>
-        <div class="scroll-vert">SCROLL DOWN</div>
+    <footer>
+      <p class="footnote">Two ledgers, one household. Follow the build on GitHub.<br>A project by <a href="https://www.ryokagroup.com" target="_blank" rel="noopener">Ryoka Group</a>.</p>
+      <div class="socials">
+        <a href="https://github.com/sillyledger/equity" aria-label="GitHub" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.5 0 12.3c0 5.44 3.44 10.05 8.21 11.68.6.11.82-.27.82-.6 0-.29-.01-1.06-.02-2.08-3.34.75-4.04-1.65-4.04-1.65-.55-1.42-1.34-1.8-1.34-1.8-1.09-.77.08-.75.08-.75 1.2.09 1.84 1.26 1.84 1.26 1.07 1.87 2.81 1.33 3.5 1.02.11-.79.42-1.33.76-1.64-2.67-.31-5.47-1.37-5.47-6.08 0-1.34.46-2.44 1.22-3.3-.12-.31-.53-1.56.12-3.25 0 0 1-.33 3.3 1.26a11.2 11.2 0 0 1 6 0c2.28-1.59 3.29-1.26 3.29-1.26.65 1.69.24 2.94.12 3.25.76.86 1.22 1.96 1.22 3.3 0 4.72-2.81 5.76-5.49 6.07.43.38.81 1.13.81 2.29 0 1.65-.02 2.98-.02 3.39 0 .33.22.72.83.6C20.57 22.34 24 17.74 24 12.3 24 5.5 18.63 0 12 0z"/></svg>
+        </a>
+        <a href="mailto:pieter@ryokagroup.com" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+        </a>
       </div>
-
-      <div class="panels-col">
-        <div class="panels">
-          <div class="panel light cream">
-            <div class="doc-row">
-              <div class="doc-card h1"><div class="ln" style="width:70%;"></div><div class="ln" style="width:50%;"></div></div>
-              <div class="doc-card featured">
-                <div class="ln" style="width:80%; background:rgba(28,28,26,0.28);"></div>
-                <div class="ln" style="width:60%;"></div>
-                <div class="ln" style="width:70%;"></div>
-                <div class="pill">NT$ + US$</div>
-              </div>
-              <div class="doc-card h2"><div class="ln" style="width:65%;"></div><div class="ln" style="width:45%;"></div><div class="ln" style="width:55%;"></div></div>
-              <div class="mini-bars">
-                <div style="height:30%;"></div><div style="height:48%;"></div><div style="height:40%;"></div><div style="height:66%;"></div><div style="height:82%;"></div>
-              </div>
-            </div>
-            <h3>Two Currencies, One Number</h3>
-            <p>NT$ and USD combined, always up to date.</p>
-            <div class="learn">Learn More →</div>
-          </div>
-
-          <div class="panel center">
-            <div class="center-brand">EQUITY.</div>
-            <div class="center-art">
-              <svg width="210" height="140" viewBox="0 0 210 140" fill="none">
-                <defs>
-                  <linearGradient id="cfill" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#F2F1EC" stop-opacity="0.16"/>
-                    <stop offset="100%" stop-color="#F2F1EC" stop-opacity="0"/>
-                  </linearGradient>
-                </defs>
-                <path d="M8,96 C32,98 48,104 64,101 C86,97 96,68 116,62 C136,56 149,84 166,76 C182,68 189,41 198,26 L198,118 L8,118 Z" fill="url(#cfill)"/>
-                <path d="M8,96 C32,98 48,104 64,101 C86,97 96,68 116,62 C136,56 149,84 166,76 C182,68 189,41 198,26" stroke="#F2F1EC" stroke-width="1.6" fill="none"/>
-                <circle cx="116" cy="62" r="3.5" fill="#F2F1EC"/>
-                <circle cx="116" cy="62" r="7" fill="none" stroke="#F2F1EC" stroke-opacity="0.35"/>
-                <g transform="translate(88,30)">
-                  <rect width="56" height="18" rx="9" fill="rgba(242,241,236,0.12)" stroke="rgba(242,241,236,0.3)" stroke-width="1"/>
-                  <circle cx="12" cy="9" r="2.5" fill="#7FE0A8"/>
-                  <text x="22" y="12.5" font-family="Inter, sans-serif" font-size="8.5" font-weight="700" fill="#F2F1EC" letter-spacing="0.5">SYNCED</text>
-                </g>
-                <line x1="8" y1="118" x2="198" y2="118" stroke="rgba(242,241,236,0.2)" stroke-width="1"/>
-                <g fill="rgba(242,241,236,0.28)">
-                  <rect x="8" y="112" width="3" height="6"/><rect x="24" y="109" width="3" height="9"/><rect x="40" y="113" width="3" height="5"/><rect x="56" y="107" width="3" height="11"/><rect x="72" y="104" width="3" height="14"/><rect x="88" y="110" width="3" height="8"/><rect x="104" y="100" width="3" height="18"/><rect x="120" y="105" width="3" height="13"/><rect x="136" y="97" width="3" height="21"/><rect x="152" y="102" width="3" height="16"/><rect x="168" y="94" width="3" height="24"/><rect x="184" y="90" width="3" height="28"/>
-                </g>
-              </svg>
-            </div>
-            <div class="center-foot">NET WORTH · TW + ABROAD</div>
-          </div>
-
-          <div class="panel light lavender">
-            <div class="doc-row">
-              <div class="mini-bars" style="margin-left:0; margin-right:auto;">
-                <div style="height:70%;"></div><div style="height:52%;"></div><div style="height:60%;"></div><div style="height:36%;"></div><div style="height:24%;"></div>
-              </div>
-              <div class="doc-card h2"><div class="ln" style="width:60%;"></div><div class="ln" style="width:45%;"></div><div class="ln" style="width:70%;"></div></div>
-              <div class="doc-card featured">
-                <div class="ln" style="width:75%; background:rgba(28,28,26,0.28);"></div>
-                <div class="ln" style="width:55%;"></div>
-                <div class="ln" style="width:65%;"></div>
-                <div class="pill">Added ✓</div>
-              </div>
-              <div class="doc-card h1"><div class="ln" style="width:65%;"></div><div class="ln" style="width:40%;"></div></div>
-            </div>
-            <h3>Nothing To Connect</h3>
-            <p>Add what you own once a month — no bank linking.</p>
-            <div class="learn">Learn More →</div>
-          </div>
-        </div>
-      </div>
-    </div>
+    </footer>
   </div>
-</section>
-
-<section class="stats">
-  <div class="wrap">
-    <div class="stat"><div class="n">2</div><div class="l">countries, one household</div></div>
-    <div class="stat"><div class="n">0</div><div class="l">bank connections required</div></div>
-    <div class="stat"><div class="n">1×</div><div class="l">monthly check-in, not daily</div></div>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap" style="display:flex; justify-content:space-between; width:100%;">
-    <span>equity.tw — manually tracked, nothing connected.</span>
-    <span>© 2026</span>
-  </div>
-</footer>
-
 </body>
 </html>

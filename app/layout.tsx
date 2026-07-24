@@ -1,26 +1,31 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { site } from "@/lib/content";
+import { Fraunces, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const interBody = Inter({
+const fraunces = Fraunces({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-fraunces",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500"],
   variable: "--font-inter",
 });
 
-// Dedicated variable for the headline typeface so it can be swapped later
-// (layout.tsx-only change) without touching --font-inter or any component.
-const interHeadline = Inter({
+const jetBrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ["800"],
-  variable: "--font-inter-headline",
+  weight: ["500"],
+  variable: "--font-jetbrains-mono",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://equity.tw"),
-  title: site.title,
-  description: site.description,
+  title: "Equity — Coming Soon",
+  description:
+    "Home in two places. Tracked as one. A cross-border net worth tracker for foreigners settling in Taiwan and Taiwanese living abroad — launching soon.",
 };
 
 export default function RootLayout({
@@ -29,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${interBody.variable} ${interHeadline.variable}`}>
+    <html lang="en" className={`${fraunces.variable} ${inter.variable} ${jetBrainsMono.variable}`}>
       <body>{children}</body>
     </html>
   );
