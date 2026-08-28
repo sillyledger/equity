@@ -3,7 +3,7 @@ export function Footer() {
     <footer className="foot">
       <span>© 2026 Equity — Taichung</span>
       <span>
-        <a href="/rss.xml">RSS</a> · <a href="mailto:tenkaro@icloud.com">Email</a>
+        <a href="/rss.xml">RSS</a>
       </span>
     </footer>
   );
