@@ -1,0 +1,10 @@
+export function Footer() {
+  return (
+    <footer className="foot">
+      <span>© 2026 Equity — Taichung</span>
+      <span>
+        <a href="/rss.xml">RSS</a> · <a href="mailto:tenkaro@icloud.com">Email</a>
+      </span>
+    </footer>
+  );
+}

@@ -1,31 +1,38 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter, JetBrains_Mono } from "next/font/google";
+import { Reddit_Sans, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-const fraunces = Fraunces({
+const redditSans = Reddit_Sans({
   subsets: ["latin"],
-  weight: ["500", "600"],
-  style: ["normal", "italic"],
-  variable: "--font-fraunces",
+  weight: ["700", "800"],
+  variable: "--font-reddit",
 });
 
-const inter = Inter({
+const plexSans = IBM_Plex_Sans({
   subsets: ["latin"],
   weight: ["400", "500"],
-  variable: "--font-inter",
+  variable: "--font-plex",
 });
 
-const jetBrainsMono = JetBrains_Mono({
+const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
-  weight: ["500"],
-  variable: "--font-jetbrains-mono",
+  weight: ["400"],
+  variable: "--font-plex-mono",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://equity.tw"),
-  title: "Equity — Coming Soon",
-  description:
-    "Home in two places. Tracked as one. A cross-border net worth tracker for foreigners settling in Taiwan and Taiwanese living abroad — launching soon.",
+  title: {
+    default: "Equity",
+    template: "%s — Equity",
+  },
+  description: "A journal. Thinking out loud, badly, in public.",
+  alternates: {
+    types: {
+      "application/rss+xml": "/rss.xml",
+      "application/feed+json": "/feed.json",
+    },
+  },
 };
 
 export default function RootLayout({
@@ -34,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${inter.variable} ${jetBrainsMono.variable}`}>
+    <html lang="en" className={`${redditSans.variable} ${plexSans.variable} ${plexMono.variable}`}>
       <body>{children}</body>
     </html>
   );
