@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import { stripHtml } from "@/lib/html";
 
 /**
  * This site does not own the `posts` table's schema — Ryoka OS does, and
@@ -13,6 +14,7 @@ export interface Post {
   slug: string;
   title: string;
   excerpt: string | null;
+  /** Raw HTML from Ryoka OS's TipTap editor (editor.getHTML()) — sanitize before rendering. */
   body: string;
   status: string | null;
   published_at: string | null;
@@ -76,8 +78,15 @@ function normalizePost(row: RawPostRow): Post | null {
     id,
     slug,
     title: asString(row.title) ?? "Untitled",
-    excerpt: asString(row.excerpt),
-    body: asString(row.body) ?? "",
+    excerpt: (() => {
+      const raw = asString(row.excerpt);
+      if (!raw) return null;
+      const stripped = stripHtml(raw);
+      return stripped.length > 0 ? stripped : null;
+    })(),
+    // Ryoka OS's editor writes HTML to `content`; `body` is kept as a
+    // fallback in case a row was written under the older column name.
+    body: asString(row.content) ?? asString(row.body) ?? "",
     status: asString(row.status),
     published_at: asString(row.published_at),
     read_minutes: asNumber(row.read_minutes),

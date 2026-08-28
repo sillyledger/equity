@@ -1,40 +1,23 @@
 import { Fragment } from "react";
-import { MDXRemote } from "next-mdx-remote/rsc";
+import { sanitizePostHtml, stripHtml } from "@/lib/html";
 
 /**
- * Post bodies are written in Ryoka OS as plain markdown or plain text, not
- * guaranteed-valid MDX — a stray `<redacted>`, a comparison like `x < y`,
- * an email autolink `<a@b.com>`, or a sentence starting with "export" is
- * all it takes for @mdx-js/mdx's JSX/ESM parsing to throw. A post must
- * never 500, so this renders in three tiers, each a safe fallback for the
- * one before it:
- *
- *  1. Full MDX — handles anything actually written as MDX/JSX.
- *  2. `format: "md"` — same compiler, but disables JSX/import/export
- *     parsing and falls back to plain CommonMark, so stray angle
- *     brackets and braces are just text. This is what real Ryoka OS
- *     content needs almost all of the time.
- *  3. Escaped plain text, split into paragraphs on blank lines — pure
- *     string handling, cannot throw, used only if both compilers reject
- *     the content outright.
+ * Post bodies are raw HTML from Ryoka OS's TipTap editor
+ * (editor.getHTML()) — p, h1-h4, a, ul, ol, li, blockquote, strong, em,
+ * code, pre, img, hr, br. Sanitized against an explicit allowlist, then
+ * rendered directly; anything outside the allowlist is dropped rather
+ * than rejected, so sanitizing itself effectively cannot throw. The
+ * try/catch is defense-in-depth in case DOMPurify/jsdom itself misbehaves
+ * on some input — a post must never fail to render.
  */
-export async function PostBody({ body, slug }: { body: string; slug: string }) {
+export function PostBody({ body, slug }: { body: string; slug: string }) {
   try {
-    return await MDXRemote({ source: body });
-  } catch (mdxError) {
-    console.error(`[post-body] MDX compile failed for slug="${slug}", falling back to markdown`, mdxError);
+    const clean = sanitizePostHtml(body);
+    return <div dangerouslySetInnerHTML={{ __html: clean }} />;
+  } catch (error) {
+    console.error(`[post-body] failed to sanitize HTML for slug="${slug}", falling back to plain text`, error);
+    return <PlainText text={stripHtml(body)} />;
   }
-
-  try {
-    return await MDXRemote({ source: body, options: { mdxOptions: { format: "md" } } });
-  } catch (markdownError) {
-    console.error(
-      `[post-body] markdown compile failed for slug="${slug}", falling back to plain text`,
-      markdownError,
-    );
-  }
-
-  return <PlainText text={body} />;
 }
 
 function PlainText({ text }: { text: string }) {
