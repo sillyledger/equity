@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { PostEntry } from "@/components/post-entry";
 import { getArchive, getPostBySlug, getAdjacent } from "@/lib/posts";
@@ -38,9 +37,6 @@ export default async function EntryPage({ params }: { params: Promise<{ slug: st
 
   return (
     <>
-      <div className="col">
-        <Nav current="journal" />
-      </div>
       <PostEntry post={post} prev={prev} next={next} />
       <div className="col">
         <Footer />

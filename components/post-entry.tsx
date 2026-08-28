@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { MDXRemote } from "next-mdx-remote/rsc";
 import type { Post } from "@/lib/posts";
 import { formatDate, formatReadTime } from "@/lib/format";
+import { PostBody } from "@/components/post-body";
 
 export function PostEntry({
   post,
@@ -14,6 +14,10 @@ export function PostEntry({
 }) {
   return (
     <div className="col">
+      <Link href="/" className="back-link">
+        ← Journal
+      </Link>
+
       <header className="entry-head">
         <div className="meta">
           <span>{formatDate(post.published_at) || "Unpublished"}</span>
@@ -30,26 +34,22 @@ export function PostEntry({
       </header>
 
       <div className="prose">
-        <MDXRemote source={post.body} />
+        <PostBody body={post.body} slug={post.slug} />
       </div>
 
       {(prev || next) && (
         <nav className="adjacent" aria-label="Adjacent posts">
-          {prev ? (
+          {prev && (
             <Link href={`/${prev.slug}`}>
-              <div className="dir">← Older</div>
+              <div className="dir">Previous</div>
               <div className="title rs">{prev.title}</div>
             </Link>
-          ) : (
-            <span />
           )}
-          {next ? (
+          {next && (
             <Link href={`/${next.slug}`} className="next">
-              <div className="dir">Newer →</div>
+              <div className="dir">Next</div>
               <div className="title rs">{next.title}</div>
             </Link>
-          ) : (
-            <span />
           )}
         </nav>
       )}
