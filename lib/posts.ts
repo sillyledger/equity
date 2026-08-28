@@ -1,18 +1,29 @@
 import { createClient } from "@supabase/supabase-js";
 
+/**
+ * This site does not own the `posts` table's schema — Ryoka OS does, and
+ * it writes pieter.tw and pieterborremans.com into the same table. Only
+ * `id` and `slug` are treated as guaranteed; every other field is typed
+ * nullable and normalized below, because a column being non-null in some
+ * imagined schema is not evidence it's non-null in the row we actually get
+ * back.
+ */
 export interface Post {
   id: string;
   slug: string;
   title: string;
   excerpt: string | null;
   body: string;
-  status: "draft" | "published";
+  status: string | null;
   published_at: string | null;
   read_minutes: number | null;
   tags: string[];
-  created_at: string;
-  updated_at: string;
+  created_at: string | null;
+  updated_at: string | null;
 }
+
+/** Shape of a raw row as it comes back from Supabase — nothing on it can be trusted. */
+type RawPostRow = Record<string, unknown>;
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -38,39 +49,112 @@ function client() {
   });
 }
 
+function asString(value: unknown): string | null {
+  return typeof value === "string" && value.length > 0 ? value : null;
+}
+
+function asStringArray(value: unknown): string[] {
+  return Array.isArray(value) ? value.filter((v): v is string => typeof v === "string") : [];
+}
+
+function asNumber(value: unknown): number | null {
+  return typeof value === "number" && Number.isFinite(value) ? value : null;
+}
+
+/**
+ * Turns a raw, untrusted Supabase row into a Post with safe defaults on
+ * every field. Returns null if the row is missing the one thing nothing
+ * can be rendered without — an id and a slug — so callers can drop it
+ * instead of crashing on it.
+ */
+function normalizePost(row: RawPostRow): Post | null {
+  const id = asString(row.id);
+  const slug = asString(row.slug);
+  if (!id || !slug) return null;
+
+  return {
+    id,
+    slug,
+    title: asString(row.title) ?? "Untitled",
+    excerpt: asString(row.excerpt),
+    body: asString(row.body) ?? "",
+    status: asString(row.status),
+    published_at: asString(row.published_at),
+    read_minutes: asNumber(row.read_minutes),
+    tags: asStringArray(row.tags),
+    created_at: asString(row.created_at),
+    updated_at: asString(row.updated_at),
+  };
+}
+
+function normalizePosts(rows: RawPostRow[] | null): Post[] {
+  if (!rows) return [];
+  const posts: Post[] = [];
+  for (const row of rows) {
+    const post = normalizePost(row);
+    if (post) posts.push(post);
+    else console.error("[posts] dropped a row with no usable id/slug", row);
+  }
+  return posts;
+}
+
+/**
+ * Every exported reader below degrades to a safe empty result ([] or
+ * null) on any failure — a dropped connection, a bad query, a schema
+ * mismatch on a table this site doesn't own — instead of throwing.
+ * Nothing that reads posts should be able to take the whole build or a
+ * whole route down over Supabase being unavailable for a moment; the
+ * failure is still logged loudly server-side so it doesn't go unnoticed.
+ */
+
 export async function getLatestPosts(limit: number): Promise<Post[]> {
-  const { data, error } = await client()
-    .from("posts")
-    .select("*")
-    .eq("target_site", TARGET_SITE)
-    .eq("status", "published")
-    .order("published_at", { ascending: false })
-    .limit(limit);
-  if (error) throw error;
-  return data ?? [];
+  try {
+    const { data, error } = await client()
+      .from("posts")
+      .select("*")
+      .eq("target_site", TARGET_SITE)
+      .eq("status", "published")
+      .order("published_at", { ascending: false })
+      .limit(limit);
+    if (error) throw error;
+    return normalizePosts(data);
+  } catch (error) {
+    console.error("[posts] getLatestPosts failed", error);
+    return [];
+  }
 }
 
 export async function getArchive(): Promise<Post[]> {
-  const { data, error } = await client()
-    .from("posts")
-    .select("*")
-    .eq("target_site", TARGET_SITE)
-    .eq("status", "published")
-    .order("published_at", { ascending: false });
-  if (error) throw error;
-  return data ?? [];
+  try {
+    const { data, error } = await client()
+      .from("posts")
+      .select("*")
+      .eq("target_site", TARGET_SITE)
+      .eq("status", "published")
+      .order("published_at", { ascending: false });
+    if (error) throw error;
+    return normalizePosts(data);
+  } catch (error) {
+    console.error("[posts] getArchive failed", error);
+    return [];
+  }
 }
 
 export async function getPostBySlug(slug: string): Promise<Post | null> {
-  const { data, error } = await client()
-    .from("posts")
-    .select("*")
-    .eq("target_site", TARGET_SITE)
-    .eq("status", "published")
-    .eq("slug", slug)
-    .maybeSingle();
-  if (error) throw error;
-  return data;
+  try {
+    const { data, error } = await client()
+      .from("posts")
+      .select("*")
+      .eq("target_site", TARGET_SITE)
+      .eq("status", "published")
+      .eq("slug", slug)
+      .maybeSingle();
+    if (error) throw error;
+    return data ? normalizePost(data) : null;
+  } catch (error) {
+    console.error(`[posts] getPostBySlug failed for slug="${slug}"`, error);
+    return null;
+  }
 }
 
 export async function getAdjacent(

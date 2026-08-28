@@ -6,7 +6,10 @@ export const contentType = "image/png";
 
 export default async function OpengraphImage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = await getPostBySlug(slug);
+  const post = await getPostBySlug(slug).catch((error: unknown) => {
+    console.error(`[slug] opengraph-image failed to load post slug="${slug}"`, error);
+    return null;
+  });
 
   return new ImageResponse(
     (
