@@ -1,22 +1,13 @@
 import type { Metadata } from "next";
 import { notFound, unstable_rethrow } from "next/navigation";
 import { PostEntry } from "@/components/post-entry";
-import { getAllPosts, getPostBySlug, getAdjacent } from "@/lib/posts";
+import { getPostBySlug, getAdjacent } from "@/lib/posts";
 import { pageAlternates } from "@/lib/site";
 
-// A bad row from a shared, externally-written table must never take the
-// whole build down. If listing posts for static generation fails, fall
-// back to on-demand rendering (dynamicParams stays true by default)
-// instead of failing `next build`.
-export async function generateStaticParams() {
-  try {
-    const posts = await getAllPosts();
-    return posts.map((post) => ({ slug: post.slug }));
-  } catch (error) {
-    console.error("[slug] generateStaticParams failed, falling back to on-demand rendering", error);
-    return [];
-  }
-}
+// Every request reads Supabase live so a publish/edit in Ryoka OS shows
+// up immediately — no generateStaticParams pinning pages at build time,
+// no ISR window to wait out.
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,

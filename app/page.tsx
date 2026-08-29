@@ -5,6 +5,8 @@ import { PostRow } from "@/components/post-row";
 import { getLatestPosts } from "@/lib/posts";
 import { pageAlternates } from "@/lib/site";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   alternates: pageAlternates("/"),
   openGraph: { url: "/" },

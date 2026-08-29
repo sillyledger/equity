@@ -2,22 +2,13 @@ import type { Metadata } from "next";
 import { notFound, unstable_rethrow } from "next/navigation";
 import { Nav } from "@/components/nav";
 import { PostRow } from "@/components/post-row";
-import { getAllPosts, getPostsByCategory, groupPostsByCategory } from "@/lib/posts";
+import { getPostsByCategory } from "@/lib/posts";
 import { pageAlternates } from "@/lib/site";
 
-export async function generateStaticParams() {
-  try {
-    const posts = await getAllPosts();
-    const categories = groupPostsByCategory(posts);
-    return categories.map((category) => ({ category: category.name }));
-  } catch (error) {
-    console.error(
-      "[blog/category] generateStaticParams failed, falling back to on-demand rendering",
-      error,
-    );
-    return [];
-  }
-}
+// Every request reads Supabase live so a publish/edit in Ryoka OS shows
+// up immediately — no generateStaticParams pinning pages at build time,
+// no ISR window to wait out.
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,

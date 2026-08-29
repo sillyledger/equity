@@ -5,6 +5,8 @@ import { PostRow } from "@/components/post-row";
 import { getAllPosts, groupPostsByCategory } from "@/lib/posts";
 import { pageAlternates } from "@/lib/site";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Blog",
   alternates: pageAlternates("/blog"),

@@ -52,7 +52,12 @@ function client() {
   return createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
     auth: { persistSession: false },
     global: {
-      fetch: (input, init) => fetch(input, { ...init, next: { revalidate: 60 } }),
+      // No caching at all — publishes/edits in Ryoka OS should show up on
+      // the next request, not after a revalidation window. This also
+      // opts every route that calls into lib/posts.ts into dynamic
+      // rendering automatically (Next treats a no-store fetch as a
+      // dynamic API), which is the point.
+      fetch: (input, init) => fetch(input, { ...init, cache: "no-store" }),
     },
   });
 }
