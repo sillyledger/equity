@@ -257,33 +257,57 @@ button:focus-visible {
   line-height: 1.78;
   color: var(--fg);
 }
-.prose > * + * {
-  margin-top: 26px;
+
+/*
+ * Direct-child selectors throughout this block, on purpose: these exist
+ * to beat the global `* { margin: 0 }` reset, and a descendant selector
+ * (`.prose p`) would silently keep "working" even if an extra wrapper
+ * div ever ends up between `.prose` and its actual content again (that
+ * was the whole bug — PostBody rendered its dangerouslySetInnerHTML on
+ * an unstyled inner div, so `.prose`'s only direct child was that div,
+ * and every rule here was matching nothing). Direct-child selectors fail
+ * loudly instead — zero spacing, obviously wrong — rather than silently.
+ */
+.prose > *:first-child {
+  margin-top: 0;
 }
-.prose h1,
-.prose h2,
-.prose h3,
-.prose h4 {
+.prose > *:last-child {
+  margin-bottom: 0;
+}
+
+.prose > p {
+  margin: 0 0 26px;
+  font-size: 18px;
+  line-height: 1.78;
+  color: var(--fg);
+}
+.prose > h1,
+.prose > h2,
+.prose > h3,
+.prose > h4 {
   font-family: var(--font-reddit);
   font-weight: 700;
   letter-spacing: -0.015em;
-  line-height: 1.3;
-  margin-top: 48px;
 }
-.prose h1 {
+.prose > h1 {
   font-size: 28px;
+  line-height: 1.3;
+  margin: 48px 0 14px;
 }
-.prose h2 {
+.prose > h2 {
   font-size: 24px;
+  line-height: 1.3;
+  margin: 48px 0 14px;
 }
-.prose h3 {
+.prose > h3 {
   font-size: 19px;
+  line-height: 1.3;
+  margin: 40px 0 12px;
 }
-.prose h4 {
+.prose > h4 {
   font-size: 17px;
-}
-.prose p {
-  color: var(--fg);
+  line-height: 1.3;
+  margin: 40px 0 12px;
 }
 .prose a {
   color: var(--acc);
@@ -297,7 +321,8 @@ button:focus-visible {
   text-decoration-style: dotted;
   text-decoration-color: var(--acc);
 }
-.prose blockquote {
+.prose > blockquote {
+  margin: 32px 0;
   padding-left: 20px;
   border-left: 2px solid var(--line);
   color: var(--mut);
@@ -306,7 +331,8 @@ button:focus-visible {
   font-family: var(--font-plex-mono);
   font-size: 0.9em;
 }
-.prose pre {
+.prose > pre {
+  margin: 32px 0;
   overflow-x: auto;
   padding: 20px;
   background: rgba(233, 237, 241, 0.04);
@@ -314,19 +340,26 @@ button:focus-visible {
 .prose pre code {
   font-size: 0.9em;
 }
-.prose ul,
-.prose ol {
+.prose > ul,
+.prose > ol {
+  margin: 0 0 26px;
   padding-left: 22px;
 }
-.prose li + li {
-  margin-top: 10px;
+.prose > ul > li,
+.prose > ol > li {
+  margin-bottom: 10px;
 }
-.prose img {
+.prose > img {
   display: block;
   width: 100%;
   height: auto;
   margin: 40px 0;
   border-radius: 0;
+}
+.prose > hr {
+  margin: 40px 0;
+  border: none;
+  border-top: 1px solid var(--line);
 }
 
 .adjacent {

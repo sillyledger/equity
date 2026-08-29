@@ -36,9 +36,7 @@ export function PostEntry({
         )}
       </header>
 
-      <div className="prose">
-        <PostBody body={post.body} slug={post.slug} />
-      </div>
+      <PostBody body={post.body} slug={post.slug} />
 
       {(prev || next) && (
         <nav className="adjacent" aria-label="Adjacent posts">
