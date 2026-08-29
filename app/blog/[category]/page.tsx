@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { notFound, unstable_rethrow } from "next/navigation";
-import { Nav } from "@/components/nav";
 import { PostRow } from "@/components/post-row";
 import { getPostsByCategory } from "@/lib/posts";
 import { pageAlternates } from "@/lib/site";
@@ -37,8 +36,6 @@ export default async function CategoryPage({
 
     return (
       <>
-        <Nav current="blog" />
-
         <div className="category-head">
           <h1 className="rs">{category}</h1>
         </div>

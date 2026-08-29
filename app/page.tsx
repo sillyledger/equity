@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Nav } from "@/components/nav";
 import { PostRow } from "@/components/post-row";
 import { getLatestPosts } from "@/lib/posts";
 import { pageAlternates } from "@/lib/site";
@@ -17,8 +16,6 @@ export default async function Home() {
 
   return (
     <>
-      <Nav current="home" />
-
       <div className="hero">
         <div className="wm rs">
           Equity<b>.</b>

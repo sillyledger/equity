@@ -44,7 +44,7 @@ body {
  */
 main {
   flex: 1;
-  padding-bottom: 90px;
+  padding-bottom: 120px;
 }
 
 a {
@@ -64,11 +64,15 @@ button:focus-visible {
 }
 
 /*
- * The single definition of column width. Used by main (page content)
- * and footer — nothing else should redeclare max-width/centering.
- * Left/right only, on purpose: top/bottom padding is contextual (a
- * page's own top spacing, main's shared bottom padding, footer's own
- * vertical padding) and doesn't belong in a shared width utility.
+ * The single definition of column width, shared by header, main and
+ * footer — the three direct children of body (see app/layout.tsx) —
+ * so their left/right edges always line up. Left/right padding only,
+ * on purpose: vertical padding is declared as longhand
+ * padding-top/padding-bottom on each of .nav-row/main/.foot instead of
+ * a top/bottom value here, because a shared shorthand like
+ * `padding: 0 26px` would zero out whatever vertical padding those
+ * lower-specificity type-selector rules (main {...}) try to set —
+ * the exact class of bug that broke .prose spacing earlier.
  */
 .col {
   max-width: 660px;
@@ -82,7 +86,8 @@ button:focus-visible {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 32px 0 0;
+  padding-top: 32px;
+  padding-bottom: 32px;
 }
 .mark {
   display: flex;
@@ -97,6 +102,8 @@ button:focus-visible {
   display: flex;
   align-items: center;
   gap: 30px;
+  font-family: var(--font-plex);
+  font-weight: 400;
   font-size: 12px;
   letter-spacing: 0.18em;
   text-transform: uppercase;

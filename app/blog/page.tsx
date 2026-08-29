@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Nav } from "@/components/nav";
 import { PostRow } from "@/components/post-row";
 import { getAllPosts, groupPostsByCategory } from "@/lib/posts";
 import { pageAlternates } from "@/lib/site";
@@ -19,8 +18,6 @@ export default async function BlogPage() {
 
   return (
     <>
-      <Nav current="blog" />
-
       <div className="blog-head">
         <p className="eyebrow">Browse by category</p>
         <h1 className="rs">The journal.</h1>

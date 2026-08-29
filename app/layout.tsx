@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Reddit_Sans, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
@@ -46,6 +47,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${redditSans.variable} ${plexSans.variable} ${plexMono.variable}`}>
       <body>
+        <Nav />
         <main className="col">{children}</main>
         <Footer />
       </body>

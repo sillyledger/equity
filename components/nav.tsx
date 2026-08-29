@@ -1,23 +1,23 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Mark } from "@/components/mark";
+import { NAV_LINKS, isActiveNavLink } from "@/lib/nav-links";
 
-const LINKS = [
-  { href: "/", label: "Home", key: "home" },
-  { href: "/blog", label: "Blog", key: "blog" },
-  { href: "/about", label: "About", key: "about" },
-] as const;
-
-export function Nav({ current }: { current: (typeof LINKS)[number]["key"] }) {
+/** Rendered once, in app/layout.tsx, so it appears on every page, including ones that don't exist yet. */
+export function Nav() {
+  const pathname = usePathname();
   return (
-    <div className="nav-row">
+    <header className="nav-row col">
       <Mark />
       <nav className="nav" aria-label="Primary">
-        {LINKS.map((link) => (
-          <Link key={link.key} href={link.href} className={link.key === current ? "cur" : ""}>
+        {NAV_LINKS.map((link) => (
+          <Link key={link.href} href={link.href} className={isActiveNavLink(pathname, link.href) ? "cur" : ""}>
             {link.label}
           </Link>
         ))}
       </nav>
-    </div>
+    </header>
   );
 }

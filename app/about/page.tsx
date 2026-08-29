@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Nav } from "@/components/nav";
 import { pageAlternates } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -12,8 +11,6 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <Nav current="about" />
-
       <div className="about-head">
         <p className="eyebrow">About</p>
         <h1 className="rs">
