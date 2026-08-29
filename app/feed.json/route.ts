@@ -1,8 +1,8 @@
-import { getArchive } from "@/lib/posts";
+import { getAllPosts } from "@/lib/posts";
 import { SITE_URL } from "@/lib/site";
 
 export async function GET() {
-  const posts = await getArchive();
+  const posts = await getAllPosts();
 
   const feed = {
     version: "https://jsonfeed.org/version/1.1",

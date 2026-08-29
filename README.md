@@ -44,9 +44,10 @@ role key, no write path, and no webhook to receive.
 
 ## Project structure
 
-- `app/` — home, `[slug]` entry, `archive`, `about`, feeds, sitemap, robots, and OG images
+- `app/` — home, `[slug]` entry, `blog`, `blog/[category]`, `about`, feeds, sitemap, robots, and
+  OG images
 - `lib/posts.ts` — the only file that talks to Supabase
-- `components/` — `Nav`, `Footer`, `PostEntry`
+- `components/` — `Nav`, `Footer`, `PostEntry`, `PostRow`
 - `design/mockup.html` — the approved static reference for the dark/navy journal design. Layout,
   spacing, colors, and type scale in `app/` are ported from it, not reinterpreted.
 

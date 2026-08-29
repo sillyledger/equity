@@ -14,13 +14,16 @@ export function PostEntry({
 }) {
   return (
     <div className="col">
-      <Link href="/" className="back-link">
-        ← Journal
+      <Link href="/blog" className="back-link">
+        ← Blog
       </Link>
 
       <header className="entry-head">
         <div className="meta">
-          <span>{formatDate(post.published_at) || "Unpublished"}</span>
+          <span>
+            {formatDate(post.published_at) || "Unpublished"}
+            {post.category ? ` · ${post.category}` : ""}
+          </span>
           <span>{formatReadTime(post.read_minutes)}</span>
         </div>
         <h1 className="rs">{post.title}</h1>

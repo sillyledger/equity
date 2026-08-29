@@ -1,4 +1,4 @@
-import { getArchive } from "@/lib/posts";
+import { getAllPosts } from "@/lib/posts";
 import { SITE_URL } from "@/lib/site";
 
 function escapeXml(value: string): string {
@@ -11,7 +11,7 @@ function escapeXml(value: string): string {
 }
 
 export async function GET() {
-  const posts = await getArchive();
+  const posts = await getAllPosts();
 
   const items = posts
     .map((post) => {

@@ -18,7 +18,7 @@ export default function Error({
 
   return (
     <div className="col">
-      <Nav current="journal" />
+      <Nav current="home" />
 
       <div className="hero">
         <div className="wm rs">
@@ -29,7 +29,7 @@ export default function Error({
           <button type="button" onClick={() => reset()} className="link-action">
             Try again
           </button>{" "}
-          or head <Link href="/">back to the journal</Link>.
+          or head <Link href="/">back home</Link>.
         </p>
       </div>
 

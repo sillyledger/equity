@@ -1,0 +1,64 @@
+import type { Metadata } from "next";
+import { notFound, unstable_rethrow } from "next/navigation";
+import { Nav } from "@/components/nav";
+import { Footer } from "@/components/footer";
+import { PostRow } from "@/components/post-row";
+import { getAllPosts, getPostsByCategory, groupPostsByCategory } from "@/lib/posts";
+
+export async function generateStaticParams() {
+  try {
+    const posts = await getAllPosts();
+    const categories = groupPostsByCategory(posts);
+    return categories.map((category) => ({ category: category.name }));
+  } catch (error) {
+    console.error(
+      "[blog/category] generateStaticParams failed, falling back to on-demand rendering",
+      error,
+    );
+    return [];
+  }
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ category: string }>;
+}): Promise<Metadata> {
+  const { category } = await params;
+  return { title: category };
+}
+
+export default async function CategoryPage({
+  params,
+}: {
+  params: Promise<{ category: string }>;
+}) {
+  const { category } = await params;
+
+  try {
+    const posts = await getPostsByCategory(category);
+    if (posts.length === 0) notFound();
+
+    return (
+      <div className="col">
+        <Nav current="blog" />
+
+        <div className="category-head">
+          <h1 className="rs">{category}</h1>
+        </div>
+
+        <div className="feed">
+          {posts.map((post) => (
+            <PostRow key={post.id} post={post} />
+          ))}
+        </div>
+
+        <Footer />
+      </div>
+    );
+  } catch (error) {
+    unstable_rethrow(error);
+    console.error(`[blog/category] failed to render category="${category}"`, error);
+    notFound();
+  }
+}

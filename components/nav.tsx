@@ -1,8 +1,8 @@
 import Link from "next/link";
 
 const LINKS = [
-  { href: "/", label: "Journal", key: "journal" },
-  { href: "/archive", label: "Archive", key: "archive" },
+  { href: "/", label: "Home", key: "home" },
+  { href: "/blog", label: "Blog", key: "blog" },
   { href: "/about", label: "About", key: "about" },
 ] as const;
 

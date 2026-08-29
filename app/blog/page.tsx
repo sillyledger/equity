@@ -1,0 +1,55 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { Nav } from "@/components/nav";
+import { Footer } from "@/components/footer";
+import { PostRow } from "@/components/post-row";
+import { getAllPosts, groupPostsByCategory } from "@/lib/posts";
+
+export const metadata: Metadata = {
+  title: "Blog",
+};
+
+export default async function BlogPage() {
+  const posts = await getAllPosts();
+  const categories = groupPostsByCategory(posts);
+
+  return (
+    <div className="col">
+      <Nav current="blog" />
+
+      <div className="blog-head">
+        <p className="eyebrow">Browse by category</p>
+        <h1 className="rs">The journal.</h1>
+      </div>
+
+      {categories.length > 0 && (
+        <div className="category-grid">
+          {categories.map((category) => (
+            <Link
+              key={category.name}
+              href={`/blog/${encodeURIComponent(category.name)}`}
+              className="category-tile"
+            >
+              <div className="category-name rs">{category.name}</div>
+              <div className="category-count">
+                {category.count} {category.count === 1 ? "entry" : "entries"}
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
+
+      <div className="feed">
+        <div className="feed-head">
+          <span>All entries</span>
+        </div>
+
+        {posts.map((post) => (
+          <PostRow key={post.id} post={post} />
+        ))}
+      </div>
+
+      <Footer />
+    </div>
+  );
+}

@@ -20,8 +20,14 @@ export interface Post {
   published_at: string | null;
   read_minutes: number | null;
   tags: string[];
+  category: string | null;
   created_at: string | null;
   updated_at: string | null;
+}
+
+export interface CategoryCount {
+  name: string;
+  count: number;
 }
 
 /** Shape of a raw row as it comes back from Supabase — nothing on it can be trusted. */
@@ -91,6 +97,7 @@ function normalizePost(row: RawPostRow): Post | null {
     published_at: asString(row.published_at),
     read_minutes: asNumber(row.read_minutes),
     tags: asStringArray(row.tags),
+    category: asString(row.category),
     created_at: asString(row.created_at),
     updated_at: asString(row.updated_at),
   };
@@ -133,7 +140,7 @@ export async function getLatestPosts(limit: number): Promise<Post[]> {
   }
 }
 
-export async function getArchive(): Promise<Post[]> {
+export async function getAllPosts(): Promise<Post[]> {
   try {
     const { data, error } = await client()
       .from("posts")
@@ -144,9 +151,36 @@ export async function getArchive(): Promise<Post[]> {
     if (error) throw error;
     return normalizePosts(data);
   } catch (error) {
-    console.error("[posts] getArchive failed", error);
+    console.error("[posts] getAllPosts failed", error);
     return [];
   }
+}
+
+export async function getPostsByCategory(category: string): Promise<Post[]> {
+  try {
+    const { data, error } = await client()
+      .from("posts")
+      .select("*")
+      .eq("target_site", TARGET_SITE)
+      .eq("status", "published")
+      .eq("category", category)
+      .order("published_at", { ascending: false });
+    if (error) throw error;
+    return normalizePosts(data);
+  } catch (error) {
+    console.error(`[posts] getPostsByCategory failed for category="${category}"`, error);
+    return [];
+  }
+}
+
+/** Groups already-fetched posts by category, skipping nulls, sorted by count descending. */
+export function groupPostsByCategory(posts: Post[]): CategoryCount[] {
+  const counts = new Map<string, number>();
+  for (const post of posts) {
+    if (!post.category) continue;
+    counts.set(post.category, (counts.get(post.category) ?? 0) + 1);
+  }
+  return Array.from(counts, ([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count);
 }
 
 export async function getPostBySlug(slug: string): Promise<Post | null> {
@@ -169,7 +203,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
 export async function getAdjacent(
   slug: string,
 ): Promise<{ prev: Post | null; next: Post | null }> {
-  const posts = await getArchive();
+  const posts = await getAllPosts();
   const idx = posts.findIndex((p) => p.slug === slug);
   if (idx === -1) return { prev: null, next: null };
   return {

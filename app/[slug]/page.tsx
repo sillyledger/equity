@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound, unstable_rethrow } from "next/navigation";
 import { Footer } from "@/components/footer";
 import { PostEntry } from "@/components/post-entry";
-import { getArchive, getPostBySlug, getAdjacent } from "@/lib/posts";
+import { getAllPosts, getPostBySlug, getAdjacent } from "@/lib/posts";
 
 // A bad row from a shared, externally-written table must never take the
 // whole build down. If listing posts for static generation fails, fall
@@ -10,7 +10,7 @@ import { getArchive, getPostBySlug, getAdjacent } from "@/lib/posts";
 // instead of failing `next build`.
 export async function generateStaticParams() {
   try {
-    const posts = await getArchive();
+    const posts = await getAllPosts();
     return posts.map((post) => ({ slug: post.slug }));
   } catch (error) {
     console.error("[slug] generateStaticParams failed, falling back to on-demand rendering", error);
