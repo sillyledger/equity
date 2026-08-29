@@ -1,7 +1,8 @@
-// www is canonical — the site resolves at https://www.equity.tw, and every
-// generated URL (sitemap, feeds, OG tags, canonical links) must match that
-// host or Google Search Console will flag it as a mismatch.
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.equity.tw").replace(
+// The bare domain is canonical — www.equity.tw redirects to equity.tw at
+// the Vercel domain level, and every generated URL (sitemap, feeds, OG
+// tags, canonical links) must match that host or Google Search Console
+// will flag it as a mismatch.
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://equity.tw").replace(
   /\/$/,
   "",
 );

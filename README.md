@@ -38,16 +38,16 @@ Other scripts: `pnpm build`, `pnpm start`, `pnpm lint`, `pnpm format`.
 ```
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
-NEXT_PUBLIC_SITE_URL=https://www.equity.tw
+NEXT_PUBLIC_SITE_URL=https://equity.tw
 ```
 
 All public, read-only, safe in the browser bundle. This repo has no service role key, no write
 path, and no webhook to receive.
 
-`www.equity.tw` is the canonical host — it's what `NEXT_PUBLIC_SITE_URL` defaults to, what
-`metadataBase` resolves against, and what every generated URL (sitemap, RSS/JSON feeds, canonical
-links, OG tags) uses. The bare domain redirects to it (`next.config.ts` handles this at the
-application level; the actual domain routing is configured in Vercel's dashboard).
+`equity.tw` (bare domain) is the canonical host — it's what `NEXT_PUBLIC_SITE_URL` defaults to,
+what `metadataBase` resolves against, and what every generated URL (sitemap, RSS/JSON feeds,
+canonical links, OG tags) uses. `www.equity.tw` redirects to it at the Vercel domain level, not in
+application code — there's no redirect logic in this repo.
 
 ## Project structure
 
@@ -61,8 +61,7 @@ application level; the actual domain routing is configured in Vercel's dashboard
 ## Deploying
 
 Vercel. Set the env variables above. `pnpm build` is clean with no other required config. In
-Vercel's Project Settings → Domains, `equity.tw` should redirect to `www.equity.tw` (the code-level
-redirect in `next.config.ts` only takes effect once that domain attachment exists).
+Vercel's Project Settings → Domains, `www.equity.tw` should redirect to `equity.tw`.
 
 ## What changed from the previous direction
 
