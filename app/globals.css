@@ -382,26 +382,35 @@ button:focus-visible {
 }
 
 /* about */
+.about-head {
+  padding: 46px 0 0;
+}
+.about-head h1 {
+  margin-top: 14px;
+  font-family: var(--font-reddit);
+  font-weight: 700;
+  font-size: 44px;
+  letter-spacing: -0.03em;
+}
+.about-head h1 b {
+  color: var(--acc);
+  font-weight: 700;
+}
+
 .about-body {
-  padding: 46px 0 90px;
+  margin-top: 34px;
+  padding-bottom: 90px;
+  font-family: var(--font-plex);
+  font-weight: 400;
   font-size: 18px;
   line-height: 1.78;
   color: var(--fg);
 }
 .about-body > * + * {
-  margin-top: 22px;
+  margin-top: 26px;
 }
-.about-body h1 {
-  font-family: var(--font-reddit);
-  font-weight: 700;
-  font-size: 34px;
-  letter-spacing: -0.022em;
-  margin-bottom: 8px;
-}
-.about-body a {
-  color: var(--acc);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+.about-body p:last-child {
+  color: var(--mut);
 }
 
 @media (max-width: 900px) {
@@ -422,11 +431,11 @@ button:focus-visible {
     font-size: 23px;
   }
   .entry-head h1,
-  .category-head h1,
-  .about-body h1 {
+  .category-head h1 {
     font-size: 27px;
   }
-  .blog-head h1 {
+  .blog-head h1,
+  .about-head h1 {
     font-size: 34px;
   }
   .category-grid {
