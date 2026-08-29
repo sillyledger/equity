@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Reddit_Sans, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import { Footer } from "@/components/footer";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const redditSans = Reddit_Sans({
@@ -22,13 +23,14 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://equity.tw"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Equity",
     template: "%s — Equity",
   },
   description: "A journal. Thinking out loud, badly, in public.",
   alternates: {
+    canonical: "/",
     types: {
       "application/rss+xml": "/rss.xml",
       "application/feed+json": "/feed.json",

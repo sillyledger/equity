@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Nav } from "@/components/nav";
 import { PostRow } from "@/components/post-row";
 import { getLatestPosts } from "@/lib/posts";
+import { pageAlternates } from "@/lib/site";
+
+export const metadata: Metadata = {
+  alternates: pageAlternates("/"),
+  openGraph: { url: "/" },
+};
 
 export default async function Home() {
   const posts = await getLatestPosts(5);

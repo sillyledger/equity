@@ -15,8 +15,9 @@ the anon key. It never writes, and drafts and other sites' rows are invisible he
   Reddit Sans (wordmark, titles), IBM Plex Sans (body), IBM Plex Mono (dates, meta, footer)
 - [`@supabase/supabase-js`](https://supabase.com/docs/reference/javascript) — the anon-key public
   client, used only from `lib/posts.ts`
-- [`next-mdx-remote`](https://github.com/hashicorp/next-mdx-remote) — renders post bodies (stored
-  as MDX) via `next-mdx-remote/rsc`
+- [`isomorphic-dompurify`](https://github.com/kkomelin/isomorphic-dompurify) — sanitizes post
+  bodies, which are raw HTML from Ryoka OS's TipTap editor, against an explicit tag allowlist
+  before rendering with `dangerouslySetInnerHTML`
 - Bespoke CSS in `app/globals.css` — no utility framework
 - pnpm
 
@@ -37,10 +38,16 @@ Other scripts: `pnpm build`, `pnpm start`, `pnpm lint`, `pnpm format`.
 ```
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
+NEXT_PUBLIC_SITE_URL=https://www.equity.tw
 ```
 
-That's the whole list — public, read-only, safe in the browser bundle. This repo has no service
-role key, no write path, and no webhook to receive.
+All public, read-only, safe in the browser bundle. This repo has no service role key, no write
+path, and no webhook to receive.
+
+`www.equity.tw` is the canonical host — it's what `NEXT_PUBLIC_SITE_URL` defaults to, what
+`metadataBase` resolves against, and what every generated URL (sitemap, RSS/JSON feeds, canonical
+links, OG tags) uses. The bare domain redirects to it (`next.config.ts` handles this at the
+application level; the actual domain routing is configured in Vercel's dashboard).
 
 ## Project structure
 
@@ -53,7 +60,9 @@ role key, no write path, and no webhook to receive.
 
 ## Deploying
 
-Vercel. Set the two env variables above. `pnpm build` is clean with no other required config.
+Vercel. Set the env variables above. `pnpm build` is clean with no other required config. In
+Vercel's Project Settings → Domains, `equity.tw` should redirect to `www.equity.tw` (the code-level
+redirect in `next.config.ts` only takes effect once that domain attachment exists).
 
 ## What changed from the previous direction
 

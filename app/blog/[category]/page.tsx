@@ -3,6 +3,7 @@ import { notFound, unstable_rethrow } from "next/navigation";
 import { Nav } from "@/components/nav";
 import { PostRow } from "@/components/post-row";
 import { getAllPosts, getPostsByCategory, groupPostsByCategory } from "@/lib/posts";
+import { pageAlternates } from "@/lib/site";
 
 export async function generateStaticParams() {
   try {
@@ -24,7 +25,12 @@ export async function generateMetadata({
   params: Promise<{ category: string }>;
 }): Promise<Metadata> {
   const { category } = await params;
-  return { title: category };
+  const path = `/blog/${encodeURIComponent(category)}`;
+  return {
+    title: category,
+    alternates: pageAlternates(path),
+    openGraph: { url: path },
+  };
 }
 
 export default async function CategoryPage({

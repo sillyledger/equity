@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound, unstable_rethrow } from "next/navigation";
 import { PostEntry } from "@/components/post-entry";
 import { getAllPosts, getPostBySlug, getAdjacent } from "@/lib/posts";
+import { pageAlternates } from "@/lib/site";
 
 // A bad row from a shared, externally-written table must never take the
 // whole build down. If listing posts for static generation fails, fall
@@ -26,10 +27,13 @@ export async function generateMetadata({
   try {
     const post = await getPostBySlug(slug);
     if (!post) return {};
+    const path = `/${post.slug}`;
     return {
       title: post.title,
       description: post.excerpt ?? undefined,
+      alternates: pageAlternates(path),
       openGraph: {
+        url: path,
         title: post.title,
         description: post.excerpt ?? undefined,
         type: "article",

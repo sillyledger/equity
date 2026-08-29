@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import { Nav } from "@/components/nav";
+import { pageAlternates } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About",
   description: "Unvarnished observations, micro-essays, and field notes on modern life.",
+  alternates: pageAlternates("/about"),
+  openGraph: { url: "/about" },
 };
 
 export default function AboutPage() {
