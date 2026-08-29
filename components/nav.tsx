@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Mark } from "@/components/mark";
 
 const LINKS = [
   { href: "/", label: "Home", key: "home" },
@@ -8,12 +9,15 @@ const LINKS = [
 
 export function Nav({ current }: { current: (typeof LINKS)[number]["key"] }) {
   return (
-    <nav className="nav" aria-label="Primary">
-      {LINKS.map((link) => (
-        <Link key={link.key} href={link.href} className={link.key === current ? "cur" : ""}>
-          {link.label}
-        </Link>
-      ))}
-    </nav>
+    <div className="nav-row">
+      <Mark />
+      <nav className="nav" aria-label="Primary">
+        {LINKS.map((link) => (
+          <Link key={link.key} href={link.href} className={link.key === current ? "cur" : ""}>
+            {link.label}
+          </Link>
+        ))}
+      </nav>
+    </div>
   );
 }
