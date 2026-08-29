@@ -15,9 +15,10 @@ the anon key. It never writes, and drafts and other sites' rows are invisible he
   Reddit Sans (wordmark, titles), IBM Plex Sans (body), IBM Plex Mono (dates, meta, footer)
 - [`@supabase/supabase-js`](https://supabase.com/docs/reference/javascript) — the anon-key public
   client, used only from `lib/posts.ts`
-- [`isomorphic-dompurify`](https://github.com/kkomelin/isomorphic-dompurify) — sanitizes post
-  bodies, which are raw HTML from Ryoka OS's TipTap editor, against an explicit tag allowlist
-  before rendering with `dangerouslySetInnerHTML`
+- [`sanitize-html`](https://github.com/apostrophecms/sanitize-html) — sanitizes post bodies, which
+  are raw HTML from Ryoka OS's TipTap editor, against an explicit tag allowlist before rendering
+  with `dangerouslySetInnerHTML`. Pure JS, no jsdom — jsdom reads asset files off disk at runtime,
+  which doesn't survive Vercel's serverless output tracing
 - Bespoke CSS in `app/globals.css` — no utility framework
 - pnpm
 
