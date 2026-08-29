@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="col">
+    <>
       <Nav current="about" />
 
       <div className="about-head">
@@ -44,6 +44,6 @@ export default function AboutPage() {
         </p>
         <p>No life advice. No growth hacks. No frameworks. Just honest drafts from a working mind.</p>
       </div>
-    </div>
+    </>
   );
 }

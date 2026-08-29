@@ -36,7 +36,7 @@ export default async function CategoryPage({
     if (posts.length === 0) notFound();
 
     return (
-      <div className="col">
+      <>
         <Nav current="blog" />
 
         <div className="category-head">
@@ -48,7 +48,7 @@ export default async function CategoryPage({
             <PostRow key={post.id} post={post} />
           ))}
         </div>
-      </div>
+      </>
     );
   } catch (error) {
     unstable_rethrow(error);

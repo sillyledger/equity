@@ -18,7 +18,7 @@ export default async function BlogPage() {
   const categories = groupPostsByCategory(posts);
 
   return (
-    <div className="col">
+    <>
       <Nav current="blog" />
 
       <div className="blog-head">
@@ -52,6 +52,6 @@ export default async function BlogPage() {
           <PostRow key={post.id} post={post} />
         ))}
       </div>
-    </div>
+    </>
   );
 }

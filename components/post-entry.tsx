@@ -13,7 +13,7 @@ export function PostEntry({
   next: Post | null;
 }) {
   return (
-    <div className="col">
+    <>
       <Link href="/blog" className="back-link">
         ← Blog
       </Link>
@@ -54,6 +54,6 @@ export function PostEntry({
           )}
         </nav>
       )}
-    </div>
+    </>
   );
 }

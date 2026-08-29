@@ -3,7 +3,7 @@ import { Nav } from "@/components/nav";
 
 export default function NotFound() {
   return (
-    <div className="col">
+    <>
       <Nav current="home" />
 
       <div className="hero">
@@ -14,6 +14,6 @@ export default function NotFound() {
           Nothing here. <Link href="/">Back home</Link>.
         </p>
       </div>
-    </div>
+    </>
   );
 }

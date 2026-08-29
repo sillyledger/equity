@@ -16,7 +16,7 @@ export default async function Home() {
   const posts = await getLatestPosts(5);
 
   return (
-    <div className="col">
+    <>
       <Nav current="home" />
 
       <div className="hero">
@@ -36,6 +36,6 @@ export default async function Home() {
           <PostRow key={post.id} post={post} />
         ))}
       </div>
-    </div>
+    </>
   );
 }

@@ -16,7 +16,7 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="col">
+    <>
       <Nav current="home" />
 
       <div className="hero">
@@ -31,6 +31,6 @@ export default function Error({
           or head <Link href="/">back home</Link>.
         </p>
       </div>
-    </div>
+    </>
   );
 }

@@ -46,7 +46,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${redditSans.variable} ${plexSans.variable} ${plexMono.variable}`}>
       <body>
-        <main>{children}</main>
+        <main className="col">{children}</main>
         <Footer />
       </body>
     </html>

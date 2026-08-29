@@ -35,8 +35,16 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/*
+ * The layout owns page shell spacing — this is the one place that
+ * controls it. main carries .col (below) for content width, plus its
+ * own bottom padding so every page, including ones that don't exist
+ * yet, gets consistent breathing room before the footer without having
+ * to declare it itself.
+ */
 main {
   flex: 1;
+  padding-bottom: 90px;
 }
 
 a {
@@ -55,10 +63,18 @@ button:focus-visible {
   font-family: var(--font-reddit);
 }
 
+/*
+ * The single definition of column width. Used by main (page content)
+ * and footer — nothing else should redeclare max-width/centering.
+ * Left/right only, on purpose: top/bottom padding is contextual (a
+ * page's own top spacing, main's shared bottom padding, footer's own
+ * vertical padding) and doesn't belong in a shared width utility.
+ */
 .col {
   max-width: 660px;
   margin: 0 auto;
-  padding: 0 26px;
+  padding-left: 26px;
+  padding-right: 26px;
 }
 
 /* nav */
@@ -187,10 +203,10 @@ button:focus-visible {
   color: var(--acc);
 }
 
+/* Width/centering come from .col on the element itself — see components/footer.tsx. */
 .foot {
-  max-width: 660px;
-  margin: 0 auto;
-  padding: 30px 26px 40px;
+  padding-top: 30px;
+  padding-bottom: 40px;
   border-top: 1px solid var(--line);
   display: flex;
   align-items: center;
@@ -364,7 +380,7 @@ button:focus-visible {
 
 .adjacent {
   margin-top: 60px;
-  padding: 30px 0 90px;
+  padding-top: 30px;
   border-top: 1px solid var(--line);
   display: flex;
   justify-content: space-between;
@@ -468,7 +484,6 @@ button:focus-visible {
 
 .about-body {
   margin-top: 34px;
-  padding-bottom: 90px;
   font-family: var(--font-plex);
   font-weight: 400;
   font-size: 18px;
