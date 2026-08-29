@@ -273,7 +273,14 @@ button:focus-visible {
 .prose a {
   color: var(--acc);
   text-decoration: underline;
-  text-underline-offset: 3px;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+  text-decoration-color: color-mix(in srgb, var(--acc) 60%, transparent);
+}
+.prose a:hover {
+  text-decoration-style: dotted;
+  text-decoration-color: var(--acc);
 }
 .prose blockquote {
   padding-left: 20px;
