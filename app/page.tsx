@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Nav } from "@/components/nav";
-import { Footer } from "@/components/footer";
 import { PostRow } from "@/components/post-row";
 import { getLatestPosts } from "@/lib/posts";
 
@@ -28,8 +27,6 @@ export default async function Home() {
           <PostRow key={post.id} post={post} />
         ))}
       </div>
-
-      <Footer />
     </div>
   );
 }

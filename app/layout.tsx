@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Reddit_Sans, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Footer } from "@/components/footer";
 import "./globals.css";
 
 const redditSans = Reddit_Sans({
@@ -42,7 +43,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${redditSans.variable} ${plexSans.variable} ${plexMono.variable}`}>
-      <body>{children}</body>
+      <body>
+        <main>{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }

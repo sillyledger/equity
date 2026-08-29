@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Nav } from "@/components/nav";
-import { Footer } from "@/components/footer";
 
 export default function NotFound() {
   return (
@@ -15,8 +14,6 @@ export default function NotFound() {
           Nothing here. <Link href="/">Back home</Link>.
         </p>
       </div>
-
-      <Footer />
     </div>
   );
 }

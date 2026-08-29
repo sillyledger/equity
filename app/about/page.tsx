@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Nav } from "@/components/nav";
-import { Footer } from "@/components/footer";
 
 export const metadata: Metadata = {
   title: "About",
@@ -42,8 +41,6 @@ export default function AboutPage() {
         </p>
         <p>No life advice. No growth hacks. No frameworks. Just honest drafts from a working mind.</p>
       </div>
-
-      <Footer />
     </div>
   );
 }

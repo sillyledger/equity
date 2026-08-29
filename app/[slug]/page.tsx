@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { notFound, unstable_rethrow } from "next/navigation";
-import { Footer } from "@/components/footer";
 import { PostEntry } from "@/components/post-entry";
 import { getAllPosts, getPostBySlug, getAdjacent } from "@/lib/posts";
 
@@ -51,14 +50,7 @@ export default async function EntryPage({ params }: { params: Promise<{ slug: st
     if (!post) notFound();
     const { prev, next } = await getAdjacent(slug);
 
-    return (
-      <>
-        <PostEntry post={post} prev={prev} next={next} />
-        <div className="col">
-          <Footer />
-        </div>
-      </>
-    );
+    return <PostEntry post={post} prev={prev} next={next} />;
   } catch (error) {
     // notFound() above throws Next's own control-flow error — let it
     // through unchanged. Anything else is a genuinely broken row: log it

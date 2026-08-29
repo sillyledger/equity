@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { Nav } from "@/components/nav";
-import { Footer } from "@/components/footer";
 
 export default function Error({
   error,
@@ -32,8 +31,6 @@ export default function Error({
           or head <Link href="/">back home</Link>.
         </p>
       </div>
-
-      <Footer />
     </div>
   );
 }

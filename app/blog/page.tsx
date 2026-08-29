@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Nav } from "@/components/nav";
-import { Footer } from "@/components/footer";
 import { PostRow } from "@/components/post-row";
 import { getAllPosts, groupPostsByCategory } from "@/lib/posts";
 
@@ -48,8 +47,6 @@ export default async function BlogPage() {
           <PostRow key={post.id} post={post} />
         ))}
       </div>
-
-      <Footer />
     </div>
   );
 }

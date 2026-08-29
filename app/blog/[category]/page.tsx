@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound, unstable_rethrow } from "next/navigation";
 import { Nav } from "@/components/nav";
-import { Footer } from "@/components/footer";
 import { PostRow } from "@/components/post-row";
 import { getAllPosts, getPostsByCategory, groupPostsByCategory } from "@/lib/posts";
 
@@ -52,8 +51,6 @@ export default async function CategoryPage({
             <PostRow key={post.id} post={post} />
           ))}
         </div>
-
-        <Footer />
       </div>
     );
   } catch (error) {
