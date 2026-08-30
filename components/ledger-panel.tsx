@@ -1,5 +1,5 @@
 import type { Play } from "@/lib/plays";
-import { formatDollars } from "@/lib/format";
+import { formatDollars, amountTone } from "@/lib/format";
 import { PlayRow } from "@/components/play-row";
 
 const GOAL_CENTS = 1_000_000_000 * 100;
@@ -40,8 +40,10 @@ export function LedgerPanel({
           {featured.amountCents !== null && (
             <div className="ledger-featured-amt">
               {featured.status === "down" ? "Down" : featured.status === "up" ? "Up" : ""}{" "}
-              <b>{formatDollars(featured.amountCents)}</b> · day {dayCount(featured.createdAt)} ·{" "}
-              {featured.isOpen ? "still holding" : "closed"}
+              <b className={`amt-num ${amountTone(featured.amountCents)}`}>
+                {formatDollars(featured.amountCents)}
+              </b>{" "}
+              · day {dayCount(featured.createdAt)} · {featured.isOpen ? "still holding" : "closed"}
             </div>
           )}
         </div>

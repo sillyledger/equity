@@ -316,10 +316,24 @@ button:focus-visible {
   margin-top: 12px;
   font-family: var(--font-plex-mono);
   font-size: 13px;
-  color: var(--risk);
+  color: var(--mut);
 }
 .ledger-featured-amt b {
   font-size: 15px;
+}
+/* Colour marks only the number itself — never the surrounding words —
+   wherever a play amount is rendered (featured card, row list). */
+.amt-num {
+  font-weight: 700;
+}
+.amt-num.gain {
+  color: var(--gain);
+}
+.amt-num.risk {
+  color: var(--risk);
+}
+.amt-num.dim {
+  color: var(--dim);
 }
 .ledger-row {
   display: flex;
@@ -352,12 +366,6 @@ button:focus-visible {
   font-family: var(--font-plex-mono);
   font-size: 12px;
   color: var(--dim);
-}
-.ledger-row-amt.up {
-  color: var(--gain);
-}
-.ledger-row-amt.down {
-  color: var(--risk);
 }
 
 /* /ledger page */

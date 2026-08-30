@@ -27,3 +27,9 @@ export function formatDollars(cents: number): string {
   const dollars = Math.round(Math.abs(cents) / 100);
   return `$${dollars.toLocaleString("en-US")}`;
 }
+
+/** Colour tone for a signed cents value — only the number itself should ever carry this colour, never surrounding text. */
+export function amountTone(cents: number | null): "gain" | "risk" | "dim" {
+  if (cents === null) return "dim";
+  return cents >= 0 ? "gain" : "risk";
+}
