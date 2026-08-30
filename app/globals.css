@@ -6,6 +6,9 @@
   --dim: #5d6a76;
   --acc: #7fb0d9;
   --line: rgba(233, 237, 241, 0.1);
+  --risk: #e0654a;
+  --gain: #5fb08a;
+  --panel: #131b24;
 
   --font-reddit: "Reddit Sans", system-ui, sans-serif;
   --font-plex: "IBM Plex Sans", system-ui, sans-serif;
@@ -113,6 +116,40 @@ button:focus-visible {
 .nav a.cur {
   color: var(--fg);
 }
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  row-gap: 8px;
+}
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-plex-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--risk);
+  animation: badge-pulse 2s ease-in-out infinite;
+}
+@keyframes badge-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
 
 /* hero */
 .hero {
@@ -154,6 +191,197 @@ button:focus-visible {
   padding: 0;
   font: inherit;
   cursor: pointer;
+}
+
+/* equity hero — breaks out of .col's 660px width to the wider 1180px
+   ledger layout. The outer element cancels the parent's centering via
+   the viewport-relative margin trick; the inner element re-centers its
+   own, wider max-width. Nav/main/footer widths are untouched. */
+.eq-hero-bleed {
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+.eq-hero {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 30px 32px 20px;
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 64px;
+  align-items: center;
+  min-height: 64vh;
+}
+.eq-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-plex-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--acc);
+}
+.eq-rule {
+  width: 22px;
+  height: 1px;
+  background: var(--acc);
+}
+.eq-h1 {
+  margin-top: 24px;
+  font-family: var(--font-reddit);
+  font-weight: 800;
+  font-size: clamp(32px, 3.8vw, 50px);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+.eq-h1 .risk {
+  color: var(--risk);
+}
+.eq-sub {
+  margin-top: 22px;
+  font-size: 16.5px;
+  line-height: 1.7;
+  color: var(--mut);
+  max-width: 46ch;
+}
+.eq-ctas {
+  margin-top: 34px;
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  flex-wrap: wrap;
+}
+.eq-cta {
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  padding: 12px 22px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.eq-cta:hover {
+  border-color: var(--fg);
+}
+
+/* ledger panel — shared by the homepage hero and /ledger */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 30px;
+}
+.ledger-k {
+  font-family: var(--font-plex-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.ledger-top {
+  margin-bottom: 22px;
+}
+.ledger-num {
+  margin-top: 8px;
+  font-family: var(--font-reddit);
+  font-weight: 800;
+  font-size: 36px;
+  letter-spacing: -0.03em;
+}
+.ledger-of {
+  margin-top: 2px;
+  font-family: var(--font-plex-mono);
+  font-size: 11px;
+  color: var(--dim);
+}
+.ledger-featured {
+  border-top: 1px solid var(--line);
+  padding: 20px 0 22px;
+  border-left: 2px solid var(--risk);
+  padding-left: 16px;
+  margin-left: -2px;
+}
+.ledger-featured-label {
+  font-family: var(--font-plex-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--risk);
+}
+.ledger-featured-quote {
+  margin-top: 10px;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--fg);
+}
+.ledger-featured-amt {
+  margin-top: 12px;
+  font-family: var(--font-plex-mono);
+  font-size: 13px;
+  color: var(--risk);
+}
+.ledger-featured-amt b {
+  font-size: 15px;
+}
+.ledger-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+.ledger-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.ledger-dot.up {
+  background: var(--gain);
+}
+.ledger-dot.down {
+  background: var(--risk);
+}
+.ledger-dot.flat {
+  background: var(--dim);
+}
+.ledger-row-label {
+  flex: 1;
+  font-size: 13.5px;
+  color: var(--mut);
+}
+.ledger-row-amt {
+  font-family: var(--font-plex-mono);
+  font-size: 12px;
+  color: var(--dim);
+}
+.ledger-row-amt.up {
+  color: var(--gain);
+}
+.ledger-row-amt.down {
+  color: var(--risk);
+}
+
+/* /ledger page */
+.ledger-head {
+  padding: 46px 0 0;
+}
+.ledger-head h1 {
+  margin-top: 14px;
+  font-family: var(--font-reddit);
+  font-weight: 700;
+  font-size: 44px;
+  letter-spacing: -0.03em;
+}
+.ledger-panel-wrap {
+  margin-top: 34px;
+}
+
+@media (max-width: 860px) {
+  .eq-hero {
+    grid-template-columns: 1fr;
+    gap: 44px;
+    min-height: auto;
+    padding-top: 10px;
+  }
 }
 
 /* feed */
@@ -529,8 +757,12 @@ button:focus-visible {
     font-size: 27px;
   }
   .blog-head h1,
-  .about-head h1 {
+  .about-head h1,
+  .ledger-head h1 {
     font-size: 34px;
+  }
+  .badge {
+    display: none;
   }
   .category-grid {
     grid-template-columns: 1fr;

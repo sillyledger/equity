@@ -21,3 +21,9 @@ export function formatReadTime(minutes: number | null): string {
   const value = minutes && minutes > 0 ? minutes : 1;
   return `${value} min read`;
 }
+
+/** Formats a signed cents value as an unsigned dollar string, e.g. -34000 -> "$340". Sign is the caller's job. */
+export function formatDollars(cents: number): string {
+  const dollars = Math.round(Math.abs(cents) / 100);
+  return `$${dollars.toLocaleString("en-US")}`;
+}

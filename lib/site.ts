@@ -7,6 +7,11 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://equity.tw"
   "",
 );
 
+// Shown in the nav badge ("Tracking since Aug 2026"). Fixed at the date
+// the billion-dollar ledger launched — not derived from data, since
+// there's no "campaign start" row anywhere to read it from.
+export const TRACKING_SINCE = "Aug 2026";
+
 const FEED_TYPES = {
   "application/rss+xml": "/rss.xml",
   "application/feed+json": "/feed.json",
