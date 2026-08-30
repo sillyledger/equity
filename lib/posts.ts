@@ -188,6 +188,32 @@ export function groupPostsByCategory(posts: Post[]): CategoryCount[] {
   return Array.from(counts, ([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count);
 }
 
+/**
+ * Same result as groupPostsByCategory(await getAllPosts()), but selects
+ * only the `category` column instead of full rows — for callers (like
+ * the homepage sidebar) that need the counts but not the posts themselves.
+ */
+export async function getCategoryCounts(): Promise<CategoryCount[]> {
+  try {
+    const { data, error } = await client()
+      .from("posts")
+      .select("category")
+      .eq("target_site", TARGET_SITE)
+      .eq("status", "published");
+    if (error) throw error;
+    const counts = new Map<string, number>();
+    for (const row of data ?? []) {
+      const category = asString((row as RawPostRow).category);
+      if (!category) continue;
+      counts.set(category, (counts.get(category) ?? 0) + 1);
+    }
+    return Array.from(counts, ([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count);
+  } catch (error) {
+    console.error("[posts] getCategoryCounts failed", error);
+    return [];
+  }
+}
+
 export async function getPostBySlug(slug: string): Promise<Post | null> {
   try {
     const { data, error } = await client()

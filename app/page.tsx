@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { PostRow } from "@/components/post-row";
+import { HomeFeed } from "@/components/home-feed";
 import { LedgerPanel } from "@/components/ledger-panel";
-import { getLatestPosts } from "@/lib/posts";
+import { getLatestPosts, getCategoryCounts } from "@/lib/posts";
 import { getFeaturedPlay, getOpenPlays, sumAmountCents } from "@/lib/plays";
 import { pageAlternates } from "@/lib/site";
 
@@ -14,8 +14,9 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const [posts, featured, openPlays] = await Promise.all([
+  const [posts, categories, featured, openPlays] = await Promise.all([
     getLatestPosts(5),
+    getCategoryCounts(),
     getFeaturedPlay(),
     getOpenPlays(),
   ]);
@@ -51,16 +52,7 @@ export default async function Home() {
         </div>
       </div>
 
-      <div className="feed">
-        <div className="feed-head">
-          <span>Latest posts</span>
-          <Link href="/blog">View all posts →</Link>
-        </div>
-
-        {posts.map((post) => (
-          <PostRow key={post.id} post={post} />
-        ))}
-      </div>
+      <HomeFeed posts={posts} categories={categories} />
     </>
   );
 }
