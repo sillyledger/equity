@@ -33,7 +33,7 @@ export default async function Home() {
               Every reckless idea that might make money
             </p>
             <h1 className="eq-h1 rs">
-              One absurd goal. A different reckless move every time: <span className="risk">$1,000,000,000.</span>
+              High stakes. Stupid shit. Reckless on purpose: <span className="risk">$1,000,000,000.</span>
             </h1>
             <p className="eq-sub">
               Bigger poker sessions than I should play. Trades sized past sane risk. Domain flips, resales, weird
