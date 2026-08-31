@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { Post, CategoryCount } from "@/lib/posts";
+import { categorySlug, type Post, type CategoryCount } from "@/lib/posts";
 import { formatDate, formatReadTime } from "@/lib/format";
 
 export function HomeFeed({ posts, categories }: { posts: Post[]; categories: CategoryCount[] }) {
@@ -37,7 +37,7 @@ export function HomeFeed({ posts, categories }: { posts: Post[]; categories: Cat
           <aside className="hf-side">
             <div className="hf-catbox">
               {categories.map((category) => (
-                <Link key={category.name} href={`/blog/${encodeURIComponent(category.name)}`} className="hf-cat">
+                <Link key={category.name} href={`/blog/${categorySlug(category.name)}`} className="hf-cat">
                   <span className="hf-cat-name rs">{category.name}</span>
                   <span className="hf-cat-count">
                     {category.count} {category.count === 1 ? "entry" : "entries"}

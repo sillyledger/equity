@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound, unstable_rethrow } from "next/navigation";
 import { PostRow } from "@/components/post-row";
-import { getPostsByCategory } from "@/lib/posts";
+import { getPostsByCategory, getCategoryNameBySlug } from "@/lib/posts";
 import { pageAlternates } from "@/lib/site";
 
 // Every request reads Supabase live so a publish/edit in Ryoka OS shows
@@ -9,15 +9,18 @@ import { pageAlternates } from "@/lib/site";
 // no ISR window to wait out.
 export const dynamic = "force-dynamic";
 
+// The [category] param is a slug (e.g. "field-notes"), never the raw
+// category name — see lib/posts.ts:categorySlug for why.
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ category: string }>;
 }): Promise<Metadata> {
-  const { category } = await params;
-  const path = `/blog/${encodeURIComponent(category)}`;
+  const { category: slug } = await params;
+  const name = await getCategoryNameBySlug(slug);
+  const path = `/blog/${slug}`;
   return {
-    title: category,
+    title: name ?? slug,
     alternates: pageAlternates(path),
     openGraph: { url: path },
   };
@@ -28,16 +31,19 @@ export default async function CategoryPage({
 }: {
   params: Promise<{ category: string }>;
 }) {
-  const { category } = await params;
+  const { category: slug } = await params;
 
   try {
-    const posts = await getPostsByCategory(category);
+    const name = await getCategoryNameBySlug(slug);
+    if (!name) notFound();
+
+    const posts = await getPostsByCategory(name);
     if (posts.length === 0) notFound();
 
     return (
       <>
         <div className="category-head">
-          <h1 className="rs">{category}</h1>
+          <h1 className="rs">{name}</h1>
         </div>
 
         <div className="feed">
@@ -49,7 +55,7 @@ export default async function CategoryPage({
     );
   } catch (error) {
     unstable_rethrow(error);
-    console.error(`[blog/category] failed to render category="${category}"`, error);
+    console.error(`[blog/category] failed to render category slug="${slug}"`, error);
     notFound();
   }
 }

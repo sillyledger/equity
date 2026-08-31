@@ -189,6 +189,28 @@ export function groupPostsByCategory(posts: Post[]): CategoryCount[] {
 }
 
 /**
+ * URL-safe slug for a category name, e.g. "Field Notes" -> "field-notes".
+ * The single source of truth for category URLs — every link to
+ * /blog/[category] and every match against that route's param must go
+ * through this, never the raw name (which can contain spaces or
+ * punctuation that don't survive a naive encode/decode round trip) and
+ * never a partial fix like decoding %20 back to a literal space.
+ */
+export function categorySlug(name: string): string {
+  return name
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+/** Reverse of categorySlug: finds the real category name a /blog/[category] slug refers to, or null if none match. */
+export async function getCategoryNameBySlug(slug: string): Promise<string | null> {
+  const categories = await getCategoryCounts();
+  return categories.find((category) => categorySlug(category.name) === slug)?.name ?? null;
+}
+
+/**
  * Same result as groupPostsByCategory(await getAllPosts()), but selects
  * only the `category` column instead of full rows — for callers (like
  * the homepage sidebar) that need the counts but not the posts themselves.

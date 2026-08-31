@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PostRow } from "@/components/post-row";
-import { getAllPosts, groupPostsByCategory } from "@/lib/posts";
+import { getAllPosts, groupPostsByCategory, categorySlug } from "@/lib/posts";
 import { pageAlternates } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
@@ -28,7 +28,7 @@ export default async function BlogPage() {
           {categories.map((category) => (
             <Link
               key={category.name}
-              href={`/blog/${encodeURIComponent(category.name)}`}
+              href={`/blog/${categorySlug(category.name)}`}
               className="category-tile"
             >
               <div className="category-name rs">{category.name}</div>
