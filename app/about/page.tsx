@@ -3,7 +3,8 @@ import { pageAlternates } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Unvarnished observations, micro-essays, and field notes on modern life.",
+  description:
+    "One absurd number, chased in public. No system, no advice, every play published until it hits $1,000,000,000.",
   alternates: pageAlternates("/about"),
   openGraph: { url: "/about" },
 };
@@ -20,26 +21,31 @@ export default function AboutPage() {
 
       <div className="about-body">
         <p>
-          Most of what gets published online has been polished until the thinking fell out of it.
-          Optimised for search, hedged for reach, written in the voice of someone pretending to
-          have already arrived. Equity is an exercise in the opposite.
+          Most people who talk about money online are selling something. A course, a signal, a
+          version of themselves that never loses. This isn&apos;t that.
         </p>
         <p>
-          It&apos;s a repository of unvarnished observations, micro-essays, and field notes on
-          modern life, culture, and ordinary human behaviour. The subject is usually a system
-          nobody notices they&apos;re inside: a habit, a default, a trade-off agreed to years ago
-          and never revisited.
+          This is one absurd number, chased in public, through whatever stupid idea looks like it
+          might work. Poker sessions sized bigger than they should be. Trades that ignore every
+          rule about position sizing. Domain flips bought at 2am for reasons that don&apos;t
+          survive daylight. Resales, weird bets, whatever&apos;s next.
         </p>
         <p>
-          Entries here are drafts on purpose. Some are wrong. An argument with its working still
-          visible is worth more than a conclusion handed over finished, and revising in public
-          costs less than being right in private.
+          None of it is a system. Some of it is skill pushed past where skill should stop. Some of
+          it is just recklessness with a spreadsheet attached. The point isn&apos;t the method,
+          it&apos;s the number: zero, on the way to one billion dollars, tracked the whole way so
+          there&apos;s nowhere to quietly stop counting.
         </p>
         <p>
-          No schedule. No niche. No throughline beyond whatever refused to go away that week.
-          Short when short is honest, long when the thing takes that long.
+          Every play gets published. The wins and the ones that don&apos;t work, in the same
+          place, at the same size. No performance, no highlight reel. If it goes to zero, it says
+          zero.
         </p>
-        <p>No life advice. No growth hacks. No frameworks. Just honest drafts from a working mind.</p>
+        <p>
+          This is not advice. Nobody should copy any of it, least of all the parts that work,
+          because the parts that work are usually the parts that got lucky.
+        </p>
+        <p>No plan beyond the number. No exit beyond hitting it or running out of money trying.</p>
       </div>
     </>
   );
