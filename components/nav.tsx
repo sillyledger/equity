@@ -10,7 +10,7 @@ import { TRACKING_SINCE } from "@/lib/site";
 export function Nav() {
   const pathname = usePathname();
   return (
-    <header className="nav-row col">
+    <header className="nav-row">
       <Mark />
       <div className="nav-right">
         <nav className="nav" aria-label="Primary">

@@ -67,12 +67,14 @@ button:focus-visible {
 }
 
 /*
- * The single definition of column width, shared by header, main and
- * footer — the three direct children of body (see app/layout.tsx) —
- * so their left/right edges always line up. Left/right padding only,
- * on purpose: vertical padding is declared as longhand
- * padding-top/padding-bottom on each of .nav-row/main/.foot instead of
- * a top/bottom value here, because a shared shorthand like
+ * The single definition of column width, shared by main and footer —
+ * two of the three direct children of body (see app/layout.tsx) — so
+ * their left/right edges always line up. The header is deliberately
+ * excluded (see .nav-row) so the nav can span the full viewport width
+ * instead of sitting inside this centered column. Left/right padding
+ * only, on purpose: vertical padding is declared as longhand
+ * padding-top/padding-bottom on each of main/.foot instead of a
+ * top/bottom value here, because a shared shorthand like
  * `padding: 0 26px` would zero out whatever vertical padding those
  * lower-specificity type-selector rules (main {...}) try to set —
  * the exact class of bug that broke .prose spacing earlier.
@@ -84,13 +86,17 @@ button:focus-visible {
   padding-right: 26px;
 }
 
-/* nav */
+/* nav — deliberately not .col: the nav spans the full viewport width edge
+   to edge with its own padding, so the mark sits at the true left edge of
+   the page instead of the centered content column's left edge. */
 .nav-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding-top: 36px;
   padding-bottom: 36px;
+  padding-left: 32px;
+  padding-right: 32px;
 }
 .mark {
   display: flex;
