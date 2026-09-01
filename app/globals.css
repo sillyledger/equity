@@ -88,11 +88,18 @@ button:focus-visible {
 
 /* nav — deliberately not .col: the nav spans the full viewport width edge
    to edge with its own padding, so the mark sits at the true left edge of
-   the page instead of the centered content column's left edge. */
+   the page instead of the centered content column's left edge.
+   Grid rather than flex space-between: a flex row pins the two groups to
+   opposite edges, which drags the nav+badge block off-center by half the
+   mark's width. The 1fr/auto/1fr grid gives the mark its own column with
+   an equal-width empty column mirrored on the right, so the middle
+   column centers against the full header width regardless of how wide
+   the mark is. */
 .nav-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
+  column-gap: 24px;
   padding-top: 36px;
   padding-bottom: 36px;
   padding-left: 32px;
@@ -102,6 +109,7 @@ button:focus-visible {
   display: flex;
   align-items: center;
   gap: 16px;
+  justify-self: start;
 }
 .mark img {
   display: block;
@@ -139,6 +147,7 @@ button:focus-visible {
   flex-wrap: wrap;
   justify-content: flex-end;
   row-gap: 8px;
+  justify-self: center;
 }
 .badge {
   display: flex;
@@ -882,13 +891,11 @@ button:focus-visible {
     min-height: 40vh;
   }
   .nav-row {
-    flex-wrap: wrap;
+    grid-template-columns: 1fr;
     row-gap: 18px;
   }
-  .mark {
-    flex-basis: 100%;
-  }
   .nav-right {
+    justify-self: start;
     justify-content: flex-start;
   }
   .nav {
