@@ -89,17 +89,27 @@ button:focus-visible {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 32px;
-  padding-bottom: 32px;
+  padding-top: 36px;
+  padding-bottom: 36px;
 }
 .mark {
   display: flex;
   align-items: center;
+  gap: 16px;
 }
 .mark img {
   display: block;
-  height: 32px;
-  width: 32px;
+  height: 76px;
+  width: 76px;
+}
+.mark-word {
+  font-weight: 700;
+  font-size: 31px;
+  letter-spacing: -0.03em;
+}
+.mark-word b {
+  color: var(--acc);
+  font-weight: 700;
 }
 .nav {
   display: flex;
@@ -865,13 +875,26 @@ button:focus-visible {
   .hero {
     min-height: 40vh;
   }
+  .nav-row {
+    flex-wrap: wrap;
+    row-gap: 18px;
+  }
+  .mark {
+    flex-basis: 100%;
+  }
+  .nav-right {
+    justify-content: flex-start;
+  }
   .nav {
     gap: 20px;
     font-size: 11px;
   }
   .mark img {
-    height: 28px;
-    width: 28px;
+    height: 52px;
+    width: 52px;
+  }
+  .mark-word {
+    font-size: 22px;
   }
   .post h2 {
     font-size: 23px;
