@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { pageAlternates } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -46,6 +47,11 @@ export default function AboutPage() {
           because the parts that work are usually the parts that got lucky.
         </p>
         <p>No plan beyond the number. No exit beyond hitting it or running out of money trying.</p>
+        <div className="eq-ctas">
+          <Link className="eq-cta" href="/a-billion-or-it-doesnt-end-well">
+            Read the first entry →
+          </Link>
+        </div>
       </div>
     </>
   );
