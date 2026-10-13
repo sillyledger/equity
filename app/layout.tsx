@@ -1,56 +1,18 @@
 import type { Metadata } from "next";
-import { Reddit_Sans, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
-import { Nav } from "@/components/nav";
-import { Footer } from "@/components/footer";
-import { SITE_URL } from "@/lib/site";
+import { Geist } from "next/font/google";
 import "./globals.css";
 
-const redditSans = Reddit_Sans({
-  subsets: ["latin"],
-  weight: ["700", "800"],
-  variable: "--font-reddit",
-});
-
-const plexSans = IBM_Plex_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-plex",
-});
-
-const plexMono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-plex-mono",
-});
+const geist = Geist({ subsets: ["latin"], weight: ["400", "500"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
-  title: {
-    default: "Equity",
-    template: "%s — Equity",
-  },
-  description: "A journal. Thinking out loud, badly, in public.",
-  alternates: {
-    canonical: "/",
-    types: {
-      "application/rss+xml": "/rss.xml",
-      "application/feed+json": "/feed.json",
-    },
-  },
+  title: "equity.tw — launching in 2027",
+  description: "equity.tw — launching in 2027.",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${redditSans.variable} ${plexSans.variable} ${plexMono.variable}`}>
-      <body>
-        <Nav />
-        <main className="col">{children}</main>
-        <Footer />
-      </body>
+    <html lang="en">
+      <body className={geist.className}>{children}</body>
     </html>
   );
 }
